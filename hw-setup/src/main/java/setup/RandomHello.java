@@ -25,6 +25,7 @@ public class RandomHello {
         greetings[2] = "Bonjour Monde";
         greetings[3] = "Hallo Welt";
         greetings[4] = "Ciao Mondo";
+
         return greetings[randomGenerator.nextInt(5)];
     }
 }
