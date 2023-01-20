@@ -4,15 +4,22 @@
 1. Why did Fibonacci fail the testThrowsIllegalArgumentException< test? What (if anything) did
 you have to do to fix it? If you did not have to change anything to fix this issue, explain why.
 
-
+It failed the testThrowsIllegalArgumentException test because the exception should be thrown when
+n is negative. However, when n is zero, the program throws the exception. I changed the n <= 0
+condition in the if statement to n < 0 to solve it.
 
 2. Why did Fibonacci fail the testBaseCase test? What (if anything) did you have to do to fix
 it? If you did not have to change anything to fix this issue, explain why.
 
-
+Because the base case in the program Fibonacci is that, the zero-th term is exception, the first
+term is 1, and the second term is 1. The base case in the test is that, the zero-th term is 1,
+and the first term is 1. I changed the conditions in the first and second if statement. The first
+one is changed from n <= 0 to n < 0, and the second one is changed from n <= 2 to n < 2.
 
 3.Why did Fibonacci fail the testInductiveCase test? What (if anything) did you have to do to
 fix it? If you did not have to change anything to fix this issue, explain why.
 
-
+Because the index is off by one. For example, the second term in test is 2 but in the program it
+is the third term. My previous two changes already fixed the program, because changing "<=" to "<"
+reduces the index by one, so no further changes are required.
 
