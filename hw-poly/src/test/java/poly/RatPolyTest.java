@@ -580,6 +580,7 @@ public final class RatPolyTest {
 
     @Test
     public void testDivEvaltoSingleCoeff() {
+
         // 0/x = 0
         eq(poly(0, 1).div(poly(1, 1)), "0");
 

@@ -4,15 +4,73 @@
 
 1. Multiplication Pseudocode
 
-
+r = p * q:
+    set r = 0
+    { Inv1: r = q * (p_0 + p_1 + ... + p_{i-1}) where p_i is the ith term in p }
+    foreach term, t_p, in p:
+        { Inv2: r = q * (p_0 + p_1 + ... + p_{i-1} + (q_0 + q_1 + ... + q_{j-1}) * p_i)
+          where p_i is the ith term in p and q_j is the jth term in q }
+        foreach term, t_q in q:
+            if any term, t_r, in r has the same degree as the sum of degrees of t_p and t_q,
+                then replace t_r in r with the product of t_p and t_q
+                else insert the product of t_p and t_q into r as a new term
 
 2. Division Pseudocode
 
-
+r = p / q:
+    set r = 0
+    set t = p by making a term-by-term copy of all terms in p to t
+    { Inv1 : q * (r_0 + r_1 + ... + r_{i-1}) + t = p where r_i is the ith term in r }
+    foreach term, t_t in t:
+        set temp = the division of t_t by q_0, insert temp into r as a new term
+        { Inv2: q * (r_0 + r_1 + ... + r_{i-1}) + (q_0 + q_1 + ... + q_{j-1}) * r_i + t = p
+          where r_i is the ith term in r and q_j is the jth term in q }
+        foreach term, t_q in q, assume it is the j-th term in q:
+            if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp,
+                then replace t_t1 in t with t_t1 minus the product of t_q and temp
+                else insert the negative of the product of t_q and temp into t as a new term
 
 3. Division Example: (x3+x-1) / (x+1) = x2-x+2
 
-
+p = (x^3 + x - 1)
+q = (x + 1)
+r = 0
+t = copy of p = (x^3 + x - 1)
+foreach term, t_t, in t:
+    Iteration 1: t_t = x^3, r = 0, t = (x^3 + x - 1), p = (x^3 + x - 1), q = (x + 1)
+    [set temp = the division of t_t by q_0, insert temp into r as a new term] temp = t_t / q_0 = x^3 / x = x^2, so now r = x^2
+        foreach term, t_q, in q:
+            Iteration 1.1: t_q = x, temp = x^2, t = (x^3 + x - 1), r = x^2, p = (x^3 + x - 1), q = (x + 1)
+                [if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp] 1 + 2 = 3, YES
+                [then replace t_t1 in t with t_t1 minus the product of t_q and temp] t_t1 = t_t1 - t_q * temp = x^3 - x * x^2 = 0, so t = (x - 1)
+                [else insert the negative of the product of t_q and temp into t as a new term]
+            Iteration 1.2: t_q = 1, temp = x^2, t = (x - 1), r = x^2, p = (x^3 + x - 1), q = (x + 1)
+                [if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp] 0 + 2 = 2, NO
+                [then replace t_t1 in t with t_t1 minus the product of t_q and temp]
+                [else insert the negative of the product of t_q and temp into t as a new term] - 1 * x^2 = -x^2, so t = (-x^2 + x - 1)
+    Iteration 2: t_t = -x^2, r = x^2, t = (-x^2 + x - 1), p = (x^3 + x - 1), q = (x + 1)
+    [set temp = the division of t_t by q_0, insert temp into r as a new term] temp = t_t / q_0 = -x^2 / x = -x, so now r = (x^2 - x)
+        foreach term, t_q, in q:
+            Iteration 2.1: t_q = x, temp = -x, t = (-x^2 + x - 1), r = (x^2 - x), p = (x^3 + x - 1), q = (x + 1)
+                [if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp] 1 + 1 = 2, YES
+                [then replace t_t1 in t with t_t1 minus the product of t_q and temp] t_t1 = t_t1 - t_q * temp = -x^2 - x * (-x) = 0, so t = (x + 1)
+                [else insert the negative of the product of t_q and temp into t as a new term]
+            Iteration 2.2: t_q = 1, temp = -x, t = (x - 1), r = (x^2 - x), p = (x^3 + x - 1), q = (x + 1)
+                [if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp] 0 + 1 = 1, YES
+                [then replace t_t1 in t with t_t1 minus the product of t_q and temp] t_t1 = t_t1 - t_q * temp = x - 1 * (-x) = 2x, so t = (2x - 1)
+                [else insert the negative of the product of t_q and temp into t as a new term]
+    Iteration 3: t_t = 2x, r = (x^2 - x), t = (2x - 1), p = (x^3 + x - 1), q = (x + 1)
+    [set temp = the division of t_t by q_0, insert temp into r as a new term] temp = t_t / q_0 = 2x / x = 2, so now r = (x^2 - x + 2)
+        foreach term, t_q, in q:
+            Iteration 3.1: t_q = x, temp = 2, t = (2x - 1), r = (x^2 - x + 2), p = (x^3 + x - 1), q = (x + 1)
+                [if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp] 1 + 0 = 1, YES
+                [then replace t_t1 in t with t_t1 minus the product of t_q and temp] t_t1 = t_t1 - t_q * temp = 2x - x * 2 = 0, so t = -1
+                [else insert the negative of the product of t_q and temp into t as a new term]
+            Iteration 3.2: t_q = 1, temp = 2, t = - 1, r = (x^2 - x + 2), p = (x^3 + x - 1), q = (x + 1)
+                [if any term, t_t1, in t has the same degree as the sum of degrees of t_q and temp] 0 + 0 = 0, YES
+                [then replace t_t1 in t with t_t1 minus the product of t_q and temp] t_t1 = t_t1 - t_q * temp = -1 - 1 * 2 = -3, so t = -3
+                [else insert the negative of the product of t_q and temp into t as a new term]
+We are done! r = (x^2 - x + 2)
 
 
 ## Part 1
@@ -20,15 +78,38 @@
 
 1. Weakened Rep Invariant
 
+Constructor RatNum(int n, int d) could be different.
+Change: remove the gcd lines. No need to reduce the fraction anymore, and no need to compare if denominator is 0. Just
+assign numer = n and denom = d.
+Makes code less clear because it doesn't separate cases about integers (d = 0), however takes less time to compute so more efficient.
 
+Method hashCode could be different.
+Change: after checking that the current fraction is a RatNum object, first reduce it by using gcd(numer,denom), then
+return (this.numer * 2) + (this.denom * 3).
+Makes code clearer, however takes more time to compute so less efficient.
+
+Method equals is different and need to be changed.
+Change: after checking that both the current fraction and the parameter obj are RatNum objects and they are not NaNs,
+first reduce them by using gcd(numer,denom), and store them in two temporary RatNum objects (call them temp1 and temp2).
+Then compare them by returning (temp1.numer == temp2.numer) && (temp1.denom == temp2.denom).
+Makes code clearer, however takes more time to compute so less efficient.
+
+Method toString is different and need to be changed.
+Change: after checking that the current fraction is a RatNum object, first reduce it by using gcd(numer,denom), then
+apply the following comparisons and returns.
+Makes code clearer, however takes more time to compute so less efficient.
 
 2. Alternate add, sub, mul, div
 
-
+For the add, sub, and mul methods, if any of the current RatNum object or the arg object is NaN, then by directly returning
+the updated current object will not necessarily give a NaN. For the div method, if the current RatNum object is NaN, then
+by directly returning the updated current object will not necessarily give a NaN too.
 
 3. Constructor checkReps
 
-
+It is sufficient to call checkRep only at the end of the constructors, because the methods in RatNum cannot even change
+a RatNum at all. Changes to instances of RatNum is prevented by setting all instances as final, so they are immutable.
+Also, methods will only create a new RatNum whenever new values are computed, instead of directly changing the instances.
 
 
 ## Part 2
@@ -36,19 +117,48 @@
 
 1. Calls to checkRep in RatTerm
 
-
+I only included calls to checkRep at the end of constructors. Because the case of RatTerm is similar to RatNum where
+the methods in RatTerm cannot even change a RatTerm at all. Changes to instances of RatTerm is prevented by setting all
+instances as final, so they are immutable, and methods will only create a new RatTerm whenever new values are computed,
+instead of directly changing the instances.
 
 2. Weakened Rep Invariant
 
+Constructor RatTerm(RatNum c, int e) could be different.
+Change: remove the whole if statement and the clause inside it. No need to care about the special case where coefficient
+is zero while the exponent is non-zero anymore, so we can just assign coeff = c and expt = e.
+Makes code less clear because it doesn't separate cases in which the coefficient is zero, however takes less time to compute so more efficient.
 
+Method toString is different.
+Change: add a condition if (c.equals(RatNum.ZERO)) in front of the large if-else branch. Add statement output.append("0")
+inside the new if clause. Because now the exponent might not be zero when the coefficient is zero, and the original toString
+will output "0*x^"+exponent. This is not what we expected.
+Makes code clearer, however takes more time to compute so less efficient.
+
+Method hashCode could be different.
+Change: check if the current RatTerm is ZERO. If so, return this.coeff.hashCode() * 7; else return (this.coeff.hashCode() * 7) + (this.expt * 43).
+Makes code clearer, however takes more time to compute so less efficient.
+
+Method equals is different.
+Change: after checking that both the current RatTerm and the parameter obj are RatTerm objects and they are not NaNs,
+compare if both of them are ZERO by using else if(this.isZERO() && rt.isZERO()) {return true;}. After this, carry on with
+the last else branch.
+Makes code clearer, however takes more time to compute so less efficient.
 
 3. Alternate Rep Invariant
 
+Constructor RatTerm(RatNum c, int e) could be different.
+Change: change the condition in the if branch into: (c.equals(RatNum.ZERO) || c.isNaN()).
+Makes code clearer because it takes both cases of it being NaN and ZERO into account, however takes less time to compute so more efficient.
+
+Method isNaN could be different.
+Change: change return coeff.isNaN(); to if (coeff.isNaN() && expt == 0) {return true;}
+Makes code clearer, however takes more time to compute so less efficient.
 
 
 4. Preferred Invariants
 
-
+N/A
 
 
 ## Part 3
@@ -56,9 +166,14 @@
 
 1. Calls to checkRep in RatPoly
 
-
+Again, it is sufficient to call checkRep only at the end of all the constructors, because the methods in RatPoly cannot
+even change a RatPoly at all. Changes to instances of it is prevented by setting all instances as final, so they are immutable.
+Also, methods will only create a new RatPoly whenever new values are computed, instead of directly changing the instances.
 
 2. Alternate Representation
 
-
+Advantage: easier to understand so higher code clarity, less effort on considering and implementing the edge cases (NaN and ZEROs).
+Disadvantage: less modularity, breaks its connection with basic polynomial RatTerms.
+In my opinion, the original representation is better because it has higher modularity and easier to implement if the RatTerm
+object is implemented before.
 
