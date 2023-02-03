@@ -1,0 +1,40 @@
+# Test a graph with islands. Island means having discontinuous pieces of sub-graphs.
+# Graph ('A') and graph ('B') all have two islands.
+
+CreateGraph A
+# Create the first island
+AddNode A n1
+AddNode A n2
+AddNode A n3
+AddEdge A n1 n2 e12
+AddEdge A n2 n3 e23
+AddEdge A n3 n1 e31
+# Create the second island - only a single node
+AddNode A n4
+ListNodes A
+ListChildren A n1
+ListChildren A n2
+ListChildren A n3
+ListChildren A n4
+
+CreateGraph B
+# Create the first island
+AddNode B n1
+AddNode B n2
+AddNode B n3
+AddEdge B n1 n2 e12
+AddEdge B n2 n3 e23
+AddEdge B n3 n1 e31
+# Create the second island
+AddNode B n4
+AddNode B n5
+AddNode B n6
+AddEdge B n4 n5 e45
+AddEdge B n5 n6 e56
+ListNodes B
+ListChildren B n1
+ListChildren B n2
+ListChildren B n3
+ListChildren B n4
+ListChildren B n5
+ListChildren B n6

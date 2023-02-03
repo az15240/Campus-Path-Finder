@@ -8,7 +8,49 @@ interface to a graph. If your design includes multiple classes or interfaces, ex
 included each one; if not, explain whether you considered additional classes and why you decided
 not to include them.
 
+I included three different classes. The Node class is for the nodes in a graph, and it might have
+its own properties such as name and weight. The Edge class is for the edges in a graph, and it
+might also have its own properties such as starting and ending nodes, plus its label. Hence,
+nodes and edges all have their own properties, so I decide to create class for both ones to
+enhance modularity. Also I have a Graph class, that supports all operations in a graph.
 
+In the Node class:
+Constructor Node(String n): to construct a new Node with default value 0.
+Constructor Node(String n, int v): to construct a new Node with given value v.
+Observer getName(): to fetch the name of the current node.
+Observer getValue(): to fetch the value of the current node.
+Mutator setName(String n): to change the name of the current node to the given name n.
+Mutator setValue(int v): to change the value of the current node to the given value v.
+Mutators are included because I design the node to be mutable by changing its value and name.
+
+In the Edge class:
+Constructor Edge(Node st, Node ed): to construct a new edge with default label.
+Constructor Edge(Node st, Node ed, String l): to construct a new node with given label l.
+Observer getStart(): to fetch the start node of the current edge.
+Observer getEnd(): to fetch the end node of the current edge.
+Observer getLabel(): to fetch the label of the current edge.
+Mutator setStart(Node st): to change the start node of the current edge to st.
+Mutator setEnd(Node ed): to change the end node of the current edge to ed.
+Mutator setLabel(String l): to changes the label of the current edge to l.
+Mutators are included because I design the edge to be mutable by changing its start node,
+ end node, and label.
+
+In the Graph class:
+Constructor Graph(): to construct a new, empty graph.
+Observer getAllNodes(): to get a set of all nodes in the graph.
+Observer getAllEdges(): to get a map of all edges in the graph.
+Observer getNodeByName(String name): to get a node of the given name. This included to find a node by its name.
+Observer getEdgeByLabel(String label): to get an edge of the given label. This included to find an edge by its label.
+Observer getEdgesByTwoNodes(Node st, Node ed): to get a set of paths from start node to end node. This included to find routes between two nodes.
+Observer getChildrenFromNode(Node node): to get a set of nodes that are children of the given node. This shows the nodes immediately accessible from the given node.
+Observer getParentsFromNode(Node node): to get a set of nodes that are parents of the given node. This shows the nodes as immediate starts to the given node.
+Observer getNeighborsFromNode(Node node): to get a set of nodes that are neighbors of the given node. This shows the nodes directly connecting to the given node
+Observer getAllAccessibleNodes(Node node): to get a set of nodes that are accessible through an ordered list of edges starting from the given node. This can help check if two nodes are connected.
+Mutator addNode(Node node): to add a node into the graph. This included to add more nodes into the graph.
+Mutator removeNode(Node node): to remove a node from a graph. This included to remove unnecessary nodes from the graph.
+Mutator addEdge(Edge edge): to add an edge into the graph. This included to add more edges into the graph.
+Mutator removeEdge(Edge edge): to remove an edge from a graph. This included to remove unnecessary edges from the graph.
+Many mutators and observers are included because the graph do support these many operations.
 
 
 ## Part 2
@@ -17,5 +59,10 @@ not to include them.
 What was your testing strategy for this assignment? How do your script tests and JUnit tests
 differ from each other (if they do), and why?
 
-
-
+My testing strategy is to try to examine all possible cases but to try on those "interesting" cases first. For each
+case I tried several instances by going around the edge case and some more general cases, so they can hopefully cover
+the majority of possibilities.
+I use my script test on the basic node and edge constructions. For JUnit tests, it tests more complicated things such as
+calling the methods and checking return values. The reason is that JUnit tests allow the direct call on methods, so
+it is applied on those more sophisticated operations, while script test only tests on simpler cases. However, script
+tests are easier to follow step by step, so it can better help find the fundamental errors.

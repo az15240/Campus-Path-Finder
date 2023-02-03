@@ -1,0 +1,33 @@
+# Test an odd graph in which there's a center node connecting to every other nodes.
+# Every "other nodes" connect to two other "other nodes".
+# The shape of graph is like a symmetrical polygon.
+
+created graph A
+added node n0 to A
+added node n1 to A
+added node n2 to A
+added node n3 to A
+added node n4 to A
+added node n5 to A
+added edge e01 from n0 to n1 in A
+added edge e02 from n0 to n2 in A
+added edge e03 from n0 to n3 in A
+added edge e04 from n0 to n4 in A
+added edge e05 from n0 to n5 in A
+added edge e12 from n1 to n2 in A
+added edge e15 from n1 to n5 in A
+added edge e21 from n2 to n1 in A
+added edge e23 from n2 to n3 in A
+added edge e32 from n3 to n2 in A
+added edge e34 from n3 to n4 in A
+added edge e43 from n4 to n3 in A
+added edge e45 from n4 to n5 in A
+added edge e51 from n5 to n1 in A
+added edge e54 from n5 to n4 in A
+A contains: n0 n1 n2 n3 n4 n5
+the children of n0 in A are: n1(e01) n2(e02) n3(e03) n4(e04) n5(e05)
+the children of n1 in A are: n2(e12) n5(e15)
+the children of n2 in A are: n1(e21) n3(e23)
+the children of n3 in A are: n2(e32) n4(e34)
+the children of n4 in A are: n3(e43) n5(e45)
+the children of n5 in A are: n1(e51) n4(e54)

@@ -1,0 +1,10 @@
+# Test creating many new empty graphs, ('A'), ('B'), and ('C').
+
+CreateGraph A
+ListNodes A
+
+CreateGraph B
+ListNodes B
+
+CreateGraph C
+ListNodes C

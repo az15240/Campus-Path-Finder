@@ -1,0 +1,33 @@
+# Test an odd graph in which there's a center node connecting to every other nodes.
+# Every "other nodes" connect to two other "other nodes".
+# The shape of graph is like a symmetrical polygon.
+
+CreateGraph A
+AddNode A n0
+AddNode A n1
+AddNode A n2
+AddNode A n3
+AddNode A n4
+AddNode A n5
+AddEdge A n0 n1 e01
+AddEdge A n0 n2 e02
+AddEdge A n0 n3 e03
+AddEdge A n0 n4 e04
+AddEdge A n0 n5 e05
+AddEdge A n1 n2 e12
+AddEdge A n1 n5 e15
+AddEdge A n2 n1 e21
+AddEdge A n2 n3 e23
+AddEdge A n3 n2 e32
+AddEdge A n3 n4 e34
+AddEdge A n4 n3 e43
+AddEdge A n4 n5 e45
+AddEdge A n5 n1 e51
+AddEdge A n5 n4 e54
+ListNodes A
+ListChildren A n0
+ListChildren A n1
+ListChildren A n2
+ListChildren A n3
+ListChildren A n4
+ListChildren A n5

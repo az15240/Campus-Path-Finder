@@ -1,0 +1,42 @@
+# Test a graph with two nodes and edges connecting them.
+# Graph ('A') have one edge, graph ('B') have three edges pointing from the same node to the
+# same targeted node, graph ('C') have three edges not necessarily pointing from the same node
+# to the same targeted node.
+
+CreateGraph A
+AddNode A n1
+AddNode A n2
+ListChildren A n1
+ListChildren A n2
+AddEdge A n1 n2 e1
+ListNodes A
+ListChildren A n1
+ListChildren A n2
+
+CreateGraph B
+AddNode B n1
+AddNode B n2
+ListNodes B
+AddEdge B n1 n2 e1
+ListChildren B n1
+ListChildren B n2
+AddEdge B n1 n2 e2
+ListChildren B n1
+ListChildren B n2
+AddEdge B n1 n2 e3
+ListChildren B n1
+ListChildren B n2
+
+CreateGraph C
+AddNode C n1
+AddNode C n2
+ListNodes C
+AddEdge C n1 n2 e1
+ListChildren C n1
+ListChildren C n2
+AddEdge C n2 n1 e2
+ListChildren C n1
+ListChildren C n2
+AddEdge C n1 n2 e3
+ListChildren C n1
+ListChildren C n2

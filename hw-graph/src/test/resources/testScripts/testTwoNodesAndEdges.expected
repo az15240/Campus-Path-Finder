@@ -1,0 +1,42 @@
+# Test a graph with two nodes and edges connecting them.
+# Graph ('A') have one edge, graph ('B') have three edges pointing from the same node to the
+# same targeted node, graph ('C') have three edges not necessarily pointing from the same node
+# to the same targeted node.
+
+created graph A
+added node n1 to A
+added node n2 to A
+the children of n1 in A are:
+the children of n2 in A are:
+added edge e1 from n1 to n2 in A
+A contains: n1 n2
+the children of n1 in A are: n2(e1)
+the children of n2 in A are:
+
+created graph B
+added node n1 to B
+added node n2 to B
+B contains: n1 n2
+added edge e1 from n1 to n2 in B
+the children of n1 in B are: n2(e1)
+the children of n2 in B are:
+added edge e2 from n1 to n2 in B
+the children of n1 in B are: n2(e1) n2(e2)
+the children of n2 in B are:
+added edge e3 from n1 to n2 in B
+the children of n1 in B are: n2(e1) n2(e2) n2(e3)
+the children of n2 in B are:
+
+created graph C
+added node n1 to C
+added node n2 to C
+C contains: n1 n2
+added edge e1 from n1 to n2 in C
+the children of n1 in C are: n2(e1)
+the children of n2 in C are:
+added edge e2 from n2 to n1 in C
+the children of n1 in C are: n2(e1)
+the children of n2 in C are: n1(e2)
+added edge e3 from n1 to n2 in C
+the children of n1 in C are: n2(e1) n2(e3)
+the children of n2 in C are: n1(e2)

@@ -1,0 +1,40 @@
+# Test a graph with islands. Island means having discontinuous pieces of sub-graphs.
+# Graph ('A') and graph ('B') all have two islands.
+
+created graph A
+# Create the first island
+added node n1 to A
+added node n2 to A
+added node n3 to A
+added edge e12 from n1 to n2 in A
+added edge e23 from n2 to n3 in A
+added edge e31 from n3 to n1 in A
+# Create the second island - only a single node
+added node n4 to A
+A contains: n1 n2 n3 n4
+the children of n1 in A are: n2(e12)
+the children of n2 in A are: n3(e23)
+the children of n3 in A are: n1(e31)
+the children of n4 in A are:
+
+created graph B
+# Create the first island
+added node n1 to B
+added node n2 to B
+added node n3 to B
+added edge e12 from n1 to n2 in B
+added edge e23 from n2 to n3 in B
+added edge e31 from n3 to n1 in B
+# Create the second island
+added node n4 to B
+added node n5 to B
+added node n6 to B
+added edge e45 from n4 to n5 in B
+added edge e56 from n5 to n6 in B
+B contains: n1 n2 n3 n4 n5 n6
+the children of n1 in B are: n2(e12)
+the children of n2 in B are: n3(e23)
+the children of n3 in B are: n1(e31)
+the children of n4 in B are: n5(e45)
+the children of n5 in B are: n6(e56)
+the children of n6 in B are:

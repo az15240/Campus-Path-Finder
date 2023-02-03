@@ -1,0 +1,10 @@
+# Test creating many new empty graphs, ('A'), ('B'), and ('C').
+
+created graph A
+A contains:
+
+created graph B
+B contains:
+
+created graph C
+C contains:
