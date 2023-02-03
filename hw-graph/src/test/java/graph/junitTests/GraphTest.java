@@ -5,10 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -34,7 +31,7 @@ public class GraphTest {
     private Edge e11Label = new Edge(n1, n1, "e11");
     private Edge e12Label = new Edge(n1, n2, "e12");
 
-    // private Graph graph = new Graph();
+    private Graph emtpyGraph = new Graph();
 
     private Graph makeFullGraphNodes() {
         Graph graph = new Graph();
@@ -49,11 +46,11 @@ public class GraphTest {
         graph.addNode(n0);
         graph.addNode(n1);
         graph.addNode(n2);
-        graph.addEdge(e00);
-        graph.addEdge(e01);
-        graph.addEdge(e02);
-        graph.addEdge(e11);
-        graph.addEdge(e12);
+        graph.addEdge(e00Label);
+        graph.addEdge(e01Label);
+        graph.addEdge(e02Label);
+        graph.addEdge(e11Label);
+        graph.addEdge(e12Label);
         return graph;
     }
 
@@ -126,6 +123,8 @@ public class GraphTest {
         st.add(n1);
         st.add(n2);
         assertEquals(st, graph.getAllNodes());
+
+        assertEquals(new HashSet<Node>(), emtpyGraph.getAllNodes());
     }
 
     @Test
@@ -133,14 +132,103 @@ public class GraphTest {
         Graph graph = makeFullGraph();
         Map<Node, Set<Edge>> mp = new HashMap<Node, Set<Edge>>();
         Set<Edge> st0 = new HashSet<Edge>();
-        st0.add(e00);
-        st0.add(e01);
-        st0.add(e02);
+        st0.add(e00Label);
+        st0.add(e01Label);
+        st0.add(e02Label);
         mp.put(n0, st0);
         Set<Edge> st1 = new HashSet<Edge>();
-        st0.add(e11);
-        st0.add(e12);
+        st0.add(e11Label);
+        st0.add(e12Label);
         mp.put(n1, st1);
         assertEquals(mp, graph.getAllNodes());
+
+        assertEquals(new HashMap<Node, Set<Edge>>(), emtpyGraph.getAllEdges());
+    }
+
+    @Test
+    public void testGetNodeByName() {
+        Graph graph = makeFullGraph();
+        assertEquals(null, graph.getNodeByName("does not exist!"));
+        assertEquals(n0, graph.getNodeByName("n0"));
+        assertEquals(n1, graph.getNodeByName("n1"));
+        assertEquals(n2, graph.getNodeByName("n2"));
+
+        assertEquals(null, emtpyGraph.getNodeByName("n0"));
+    }
+
+    @Test
+    public void testGetEdgeByLabel() {
+        Graph graph = makeFullGraph();
+        assertEquals(null, graph.getEdgeByLabel("does not exist!"));
+        assertEquals(e00Label, graph.getEdgeByLabel("e00"));
+        assertEquals(e01Label, graph.getEdgeByLabel("e01"));
+        assertEquals(e02Label, graph.getEdgeByLabel("e02"));
+        assertEquals(e11Label, graph.getEdgeByLabel("e11"));
+        assertEquals(e12Label, graph.getEdgeByLabel("e12"));
+
+        assertEquals(null, emtpyGraph.getEdgeByLabel("e00"));
+    }
+
+    @Test
+    public void testGetEdgesByTwoNodes() {
+        Graph graph = makeFullGraph();
+        List<Edge> l = new ArrayList<Edge>();
+        l.add(e01);
+        l.add(e02);
+        Set<List<Edge>> st = new HashSet<List<Edge>>();
+        st.add(l);
+        assertEquals(st, graph.getEdgesByTwoNodes(n0, n2));
+
+        assertEquals(new HashSet<List<Edge>>(), emtpyGraph.getEdgesByTwoNodes(n0, n2));
+    }
+
+    @Test
+    public void testGetChildrenFromNode() {
+        Graph graph = makeFullGraph();
+        Set<Node> st = new HashSet<Node>();
+        st.add(n0);
+        st.add(n1);
+        st.add(n2);
+        assertEquals(st, graph.getChildrenFromNode(n0));
+
+        assertEquals(new HashSet<Node>(), emtpyGraph.getChildrenFromNode(n0));
+    }
+
+    @Test
+    public void testGetParentsFromNode() {
+        Graph graph = makeFullGraph();
+        Set<Node> st = new HashSet<Node>();
+        st.add(n0);
+        assertEquals(st, graph.getParentsFromNode(n0));
+        Set<Node> st2 = new HashSet<Node>();
+        st2.add(n0);
+        st2.add(n1);
+        assertEquals(st2, graph.getParentsFromNode(n2));
+
+        assertEquals(new HashSet<Node>(), emtpyGraph.getParentsFromNode(n0));
+    }
+
+    @Test
+    public void testGetNeighborsFromNode() {
+        Graph graph = makeFullGraph();
+        Set<Node> st = new HashSet<Node>();
+        st.add(n0);
+        st.add(n1);
+        st.add(n2);
+        assertEquals(st, graph.getNeighborsFromNode(n0));
+
+        assertEquals(new HashSet<Node>(), emtpyGraph.getNeighborsFromNode(n0));
+    }
+
+    @Test
+    public void testGetAllAccessibleNodes() {
+        Graph graph = makeFullGraph();
+        Set<Node> st = new HashSet<Node>();
+        st.add(n0);
+        st.add(n1);
+        st.add(n2);
+        assertEquals(st, graph.getAllAccessibleNodes(n0));
+
+        assertEquals(new HashSet<Node>(), emtpyGraph.getAllAccessibleNodes(n0));
     }
 }
