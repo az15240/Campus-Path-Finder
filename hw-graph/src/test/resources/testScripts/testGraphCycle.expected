@@ -12,9 +12,9 @@ added edge e12 from n1 to n2 in A
 added edge e23 from n2 to n3 in A
 added edge e31 from n3 to n1 in A
 A contains: n1 n2 n3
-the children of n1 in A are: n1(e1)
-the children of n2 in A are: n2(e2)
-the children of n3 in A are: n3(e3)
+the children of n1 in A are: n2(e12)
+the children of n2 in A are: n3(e23)
+the children of n3 in A are: n1(e31)
 
 created graph B
 added node n1 to B

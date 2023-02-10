@@ -17,14 +17,30 @@ A few examples of possible Graph representations:
 representations listed above (for example, in terms of runtime complexity, space
 complexity, or ease of implementation).
 
+A:
+Advantage: easy to access all nodes and edges. Save of space complexity when the nodes and edges are stored
+in a linear data structure.
+Disadvantage: hard to associate the edges with the nodes. Takes huge time to traverse through the graph when
+each time the program have to go through all nodes or edges to find the suitable node or edge as the next step.
 
+B:
+Advantage: easier to keep track of adjacent edges of a node. Easier to determine which next edge to visit.
+Disadvantage: still takes time to find out the edge between two arbitrary nodes as the program have to go
+through the adjacent list for a node.
+
+C:
+Advantage: super easy to know a link between two arbitrary nodes.
+Disadvantage: huge cost of space complexity. It takes a two dimensional matrix to store the information of edges.
 
 
 2. In two to three sentences, describe the representation you chose and explain why you
 chose it. If you chose to use a different representation than one of the three we described
 above, be sure to list its advantages and disadvantages, too.
 
-
+The representation I choose is B, the adjacent list. Because it balances the cost of time and space. The cost of
+checking up a node or an edge is evened out, so it is suitable for a wider needs of applications. Furthermore,
+its idea is closer associated with the notion of graph, i.e. a node has a collection of adjacent edges. It maeks
+implementers and users easier to understand it.
 
 
 ## Part 4
@@ -35,11 +51,19 @@ above, be sure to list its advantages and disadvantages, too.
 1. Describe any new tests you added and why you added them, or why you feel that your original
 tests alone are sufficient.
 
-
+I didn't add any new tests, because my only changes to my specifications are resolving some problems about edge
+cases that I didn't think about previously when designing the specs. The edge cases are all shown in my JUnit tests
+and script tests. I didn't change the main functionalities so my previous tests are sufficient.
 
 
 2. Did you make any changes to your specifications as you were implementing your Graph? (yes/no)
 If yes, describe your changes and why you made them.
 
-
-
+I changed some specifications. In class Graph, I added that "All Nodes must have different names and all Edges must have
+different labels." This prevents some weird edge cases such as getting nodes or edges with the same name or label.
+Also I removed all occurrences of "sorted" in my specs because this ADT should not support sorting. Additionally,
+in the spec for addEdge and removeEdge method, I removed all mentions of the private field called nodes, because we
+should not let the client know all implementation details, including all private fields. For some observer methods, I
+added the description of "returning null if not found" that explicitly defines behavior when encountering edge cases.
+At last, I changed the behavior and return type of methods getChildrenFromNode, getParentsFromNode and getNeighborsFromNode,
+so their return type is directly usable by the script test while having consistent formats with each other.

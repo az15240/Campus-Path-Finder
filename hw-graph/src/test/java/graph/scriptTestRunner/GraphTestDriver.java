@@ -11,10 +11,12 @@
 
 package graph.scriptTestRunner;
 
+import graph.Edge;
+import graph.Graph;
+import graph.Node;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * This class implements a testing driver which reads test scripts
@@ -26,11 +28,8 @@ public class GraphTestDriver {
     // ***  JUnit Test Driver  ***
     // ***************************
 
-    /**
-     * String -> Graph: maps the names of graphs to the actual graph
-     **/
-    // TODO for the student: Uncomment and parameterize the next line correctly:
-    //private final Map<String, _______> graphs = new HashMap<String, ________>();
+    //  for the student: Uncomment and parameterize the next line correctly:
+    private final Map<String, Graph> graphs = new HashMap<String, Graph>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -115,10 +114,9 @@ public class GraphTestDriver {
     }
 
     private void createGraph(String graphName) {
-        // TODO Insert your code here.
-
-        // graphs.put(graphName, ___);
-        // output.println(...);
+        Graph g = new Graph();
+        graphs.put(graphName, g);
+        output.println("created graph " + graphName);
     }
 
     private void addNode(List<String> arguments) {
@@ -133,10 +131,9 @@ public class GraphTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        // TODO Insert your code here.
-
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        Graph g = graphs.get(graphName);
+        g.addNode(new Node(nodeName));
+        output.println("added node " + nodeName + " to " + graphName);
     }
 
     private void addEdge(List<String> arguments) {
@@ -154,10 +151,11 @@ public class GraphTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        // TODO Insert your code here.
-
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        Graph g = graphs.get(graphName);
+        Node st = g.getNodeByName(parentName);
+        Node ed = g.getNodeByName(childName);
+        g.addEdge(new Edge(st, ed, edgeLabel));
+        output.println("added edge " + edgeLabel + " from " + parentName + " to " + childName + " in " + graphName);
     }
 
     private void listNodes(List<String> arguments) {
@@ -170,10 +168,17 @@ public class GraphTestDriver {
     }
 
     private void listNodes(String graphName) {
-        // TODO Insert your code here.
-
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        Graph g = graphs.get(graphName);
+        Set<Node> nodes = g.getAllNodes();
+        Set<String> names = new TreeSet<>();
+        for (Node n : nodes) {
+            names.add(n.getName());
+        }
+        output.print(graphName + " contains:");
+        for (String s : names) {
+            output.print(" " + s);
+        }
+        output.println();
     }
 
     private void listChildren(List<String> arguments) {
@@ -187,10 +192,27 @@ public class GraphTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        // TODO Insert your code here.
-
-        // ___ = graphs.get(graphName);
-        // output.println(...);
+        Graph g = graphs.get(graphName);
+        Map<String, String> pairs = g.getChildrenFromNode(g.getNodeByName(parentName));
+        Map<String, Set<String>> map = new TreeMap<>();
+        for (String label : pairs.keySet()) {
+            String nodeName = pairs.get(label);
+            if (!map.containsKey(nodeName)) { // Key not found, so create a new Set
+                Set<String> theLabels = new TreeSet<String>();
+                map.put(pairs.get(label), theLabels);
+                theLabels.add(label);
+            } else { // Key is found, then just add the word to the Mapped Set
+                Set<String> theLabels = map.get(nodeName);
+                theLabels.add(label);
+            }
+        }
+        output.print("the children of " + parentName + " in " + graphName + " are:");
+        for (String nodeName : map.keySet()) {
+            for (String labelName : map.get(nodeName)) {
+                output.print(" " + nodeName + "(" + labelName + ")");
+            }
+        }
+        output.println();
     }
 
     /**

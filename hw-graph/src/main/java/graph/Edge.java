@@ -8,6 +8,14 @@ package graph;
  */
 public class Edge {
 
+    // Abstraction Function:
+    // Edge e, represents an edge in a graph. It connects two not necessarily different nodes.
+    // In an Edge, start is the start node of the edge and end is the end node of the edge.
+    // label is the optional label of the edge.
+    //
+    // Representation Invariant:
+    // this != null && start != null && end != null
+
     /**
      * Start node of the edge
      */
@@ -27,10 +35,14 @@ public class Edge {
      * Constructs a new edge with default label.
      * @param st start node of the edge
      * @param ed end node of the edge
+     * @spec.requires st != null &amp;&amp; ed != null
      * @spec.effects Constructs a new edge with start node, end node, and default label.
      */
     public Edge(Node st, Node ed) {
-        throw new RuntimeException("Not implemented yet!");
+        start = st;
+        end = ed;
+        label = "";
+        checkRep();
     }
 
     /**
@@ -38,10 +50,23 @@ public class Edge {
      * @param st start node of the edge
      * @param ed end node of the edge
      * @param l label of the edge
+     * @spec.requires st != null &amp;&amp; ed != null
      * @spec.effects Constructs a new edge with start node, end node, and label l.
      */
     public Edge(Node st, Node ed, String l) {
-        throw new RuntimeException("Not implemented yet!");
+        start = st;
+        end = ed;
+        label = l;
+        checkRep();
+    }
+
+    /**
+     * Throws an exception if the representation invariant is violated.
+     */
+    private void checkRep() {
+        assert (this != null);
+        assert (start != null);
+        assert (end != null);
     }
 
     /**
@@ -50,7 +75,7 @@ public class Edge {
      * @return the start node of the current edge.
      */
     public Node getStart() {
-        throw new RuntimeException("Not implemented yet!");
+        return start;
     }
 
     /**
@@ -60,7 +85,8 @@ public class Edge {
      * @spec.modifies start
      */
     public void setStart(Node st) {
-        throw new RuntimeException("Not implemented yet!");
+        start = st;
+        checkRep();
     }
 
     /**
@@ -69,7 +95,7 @@ public class Edge {
      * @return the end node of the current edge.
      */
     public Node getEnd() {
-        throw new RuntimeException("Not implemented yet!");
+        return end;
     }
 
     /**
@@ -79,7 +105,8 @@ public class Edge {
      * @spec.modifies end
      */
     public void setEnd(Node ed) {
-        throw new RuntimeException("Not implemented yet!");
+        end = ed;
+        checkRep();
     }
 
     /**
@@ -88,7 +115,7 @@ public class Edge {
      * @return the label of the current edge.
      */
     public String getLabel() {
-        throw new RuntimeException("Not implemented yet!");
+        return label;
     }
 
     /**
@@ -98,6 +125,7 @@ public class Edge {
      * @spec.modifies label
      */
     public void setLabel(String l) {
-        throw new RuntimeException("Not implemented yet!");
+        label = l;
+        checkRep();
     }
 }

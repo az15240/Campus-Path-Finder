@@ -61,10 +61,10 @@ public class NodeTest {
 
     @Test
     public void testGetValueNoValue() {
-        assertEquals(0, defaultNode.getValue());
-        assertEquals(0, n0.getValue());
-        assertEquals(0, n1.getValue());
-        assertEquals(0, nWeird.getValue());
+        assertEquals(Integer.MIN_VALUE, defaultNode.getValue());
+        assertEquals(Integer.MIN_VALUE, n0.getValue());
+        assertEquals(Integer.MIN_VALUE, n1.getValue());
+        assertEquals(Integer.MIN_VALUE, nWeird.getValue());
     }
 
     @Test

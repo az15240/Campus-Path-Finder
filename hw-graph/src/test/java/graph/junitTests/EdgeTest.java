@@ -80,11 +80,11 @@ public class EdgeTest {
 
     @Test
     public void testGetLabelNoLabel() {
-        assertEquals(null, e00.getLabel());
-        assertEquals(null, e01.getLabel());
-        assertEquals(null, e02.getLabel());
-        assertEquals(null, e11.getLabel());
-        assertEquals(null, e12.getLabel());
+        assertEquals("", e00.getLabel());
+        assertEquals("", e01.getLabel());
+        assertEquals("", e02.getLabel());
+        assertEquals("", e11.getLabel());
+        assertEquals("", e12.getLabel());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class EdgeTest {
         e01Label.setStart(n2);
         assertEquals(n2, e01Label.getStart());
         e11.setStart(n0);
-        assertEquals(n0, e11Label.getStart());
+        assertEquals(n0, e11.getStart());
     }
 
     @Test
@@ -117,7 +117,7 @@ public class EdgeTest {
         e01Label.setEnd(n2);
         assertEquals(n2, e01Label.getEnd());
         e11.setEnd(n0);
-        assertEquals(n0, e11Label.getEnd());
+        assertEquals(n0, e11.getEnd());
     }
 
     @Test
@@ -127,9 +127,9 @@ public class EdgeTest {
         e01.setLabel("e01");
         assertEquals("e01", e01.getLabel());
         e02.setLabel("e02");
-        assertEquals("e02", e00.getLabel());
+        assertEquals("e02", e02.getLabel());
         e12.setLabel("e12");
-        assertEquals("e12", e01.getLabel());
+        assertEquals("e12", e12.getLabel());
     }
 
     @Test
@@ -137,10 +137,10 @@ public class EdgeTest {
         e00Label.setLabel("  self");
         assertEquals("  self", e00Label.getLabel());
         e01Label.setLabel("  e01");
-        assertEquals("  e01  ", e01Label.getLabel());
+        assertEquals("  e01", e01Label.getLabel());
         e02Label.setLabel("  e02");
-        assertEquals("  e02", e00Label.getLabel());
+        assertEquals("  e02", e02Label.getLabel());
         e12Label.setLabel("  e12");
-        assertEquals("  e12", e01Label.getLabel());
+        assertEquals("  e12", e12Label.getLabel());
     }
 }

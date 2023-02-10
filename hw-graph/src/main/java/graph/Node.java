@@ -6,6 +6,14 @@ package graph;
  */
 public class Node {
 
+    // Abstraction Function:
+    // Node n, represents a node in a graph.
+    // In a Node, name represents the name of the node,
+    // and value represents the value of the node.
+    //
+    // Representation Invariant:
+    // this != null
+
     /**
      * Name of the node
      */
@@ -23,7 +31,8 @@ public class Node {
      * @spec.effects Constructs a new Node with given name n and default value 0.
      */
     public Node(String n) {
-        throw new RuntimeException("Not implemented yet!");
+        name = n;
+        value = Integer.MIN_VALUE;
     }
 
     /**
@@ -34,7 +43,15 @@ public class Node {
      * @spec.effects Constructs a new Node with given name n and given value v.
      */
     public Node(String n, int v) {
-        throw new RuntimeException("Not implemented yet!");
+        name = n;
+        value = v;
+    }
+
+    /**
+     * Throws an exception if the representation invariant is violated.
+     */
+    private void checkRep() {
+        assert (this != null);
     }
 
     /**
@@ -43,7 +60,7 @@ public class Node {
      * @return the name of the current node.
      */
     public String getName() {
-        throw new RuntimeException("Not implemented yet!");
+        return name;
     }
 
     /**
@@ -53,7 +70,8 @@ public class Node {
      * @spec.modifies name
      */
     public void setName(String n) {
-        throw new RuntimeException("Not implemented yet!");
+        name = n;
+        checkRep();
     }
 
     /**
@@ -62,7 +80,7 @@ public class Node {
      * @return the value of the current node.
      */
     public int getValue() {
-        throw new RuntimeException("Not implemented yet!");
+        return value;
     }
 
     /**
@@ -72,6 +90,7 @@ public class Node {
      * @spec.modifies value
      */
     public void setValue(int v) {
-        throw new RuntimeException("Not implemented yet!");
+        value = v;
+        checkRep();
     }
 }
