@@ -2,7 +2,7 @@ package graph;
 
 /**
  * <b>Node</b> represents a <b>mutable</b> node in a graph. It includes a name and a
- * optional value for the node.
+ * optional value for the node. Two <b>Node</b>s are equal if they have the same name.
  */
 public class Node {
 
@@ -47,9 +47,8 @@ public class Node {
         value = v;
     }
 
-    /**
-     * Throws an exception if the representation invariant is violated.
-     */
+
+    // Throws an exception if the representation invariant is violated.
     private void checkRep() {
         assert (this != null);
     }
@@ -94,6 +93,15 @@ public class Node {
         checkRep();
     }
 
+    /**
+     * Indicates whether the given Object is equal to this.
+     * The given Object is equal to this if it is an instance of Node, and its name equals
+     * to the name of this.
+     *
+     * @param other the given Object
+     * @return true if Object is an instance of Node, and its name equals to the name of this
+     */
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof Node)) {
             return false;
@@ -102,6 +110,13 @@ public class Node {
         return this.name.equals(n.name);
     }
 
+    /**
+     * Returns a hash code of the object.
+     * In particular, the hashCode of this is defined as this.name's hash code.
+     *
+     * @return the hash code of the object
+     */
+    @Override
     public int hashCode() {
         return this.name.hashCode();
     }

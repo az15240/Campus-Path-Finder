@@ -4,7 +4,8 @@ package graph;
  * <b>Edge</b> represents a <b>mutable</b> edge in a graph. It connects two <b>Node</b>s from
  * start to end, and directionally pointing from start to end (start and end could
  * possibly be the same nodes). It contains the start node, the end node, and an optional
- * label.
+ * label. Two <b>Edge</b>s are considered equal if they have the same start node, end node,
+ * and same label.
  */
 public class Edge {
 
@@ -60,9 +61,7 @@ public class Edge {
         checkRep();
     }
 
-    /**
-     * Throws an exception if the representation invariant is violated.
-     */
+    // Throws an exception if the representation invariant is violated.
     private void checkRep() {
         assert (this != null);
         assert (start != null);
@@ -129,6 +128,17 @@ public class Edge {
         checkRep();
     }
 
+    /**
+     * Indicates whether the given Object is equal to this.
+     * The given Object is equal to this if it is an instance of Edge, and its start node equals
+     * to the start node of this, its end node equals to the end node of this, and its label equals
+     * to the label of this.
+     *
+     * @param other the given Object
+     * @return true if Object is an instance of Node, and its start node equals to the start node of
+     * this, its end node equals to the end node of this, and its label equals to the label of this
+     */
+    @Override
     public boolean equals(Object other) {
         if (!(other instanceof Edge)) {
             return false;
@@ -137,6 +147,14 @@ public class Edge {
         return this.label.equals(e.label) && this.start.equals(e.start) && this.end.equals(e.end);
     }
 
+    /**
+     * Returns a hash code of the object.
+     * In particular, the hashCode of this is defined as this.label's hash code times 31 times 31 plus
+     * this.start's hash code times 31 plus this.end's hash code.
+     *
+     * @return the hash code of the object
+     */
+    @Override
     public int hashCode() {
         return this.label.hashCode() * 31 * 31 + this.start.hashCode() * 31 + this.end.hashCode();
     }

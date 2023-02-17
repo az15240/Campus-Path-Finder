@@ -26,15 +26,11 @@ public class MarvelParser {
      *
      * @param filename The file that will be read.
      * @spec.requires filename is a valid file in the resources/data folder.
-     * @return a map of String-Sring Set pair that contains the data. The first String is the
+     * @return a map of String-Set of String pair that contains the data. The first String is the
      *         book name and the String Set is all marvel characters in the book.
      */
     public static Map<String, Set<String>> parseData(String filename) {
         List<String> lines = readLines(filename);
-//        System.out.println("readLines successful. printing the top 10 lines:");
-//        for (int i = 0; i < 8; i++) {
-//            System.out.println(lines.get(i));
-//        }
         Map<String, Set<String>> map = new HashMap<>();
         for (String line : lines) {
             String name = line.substring(0, line.indexOf(','));
@@ -51,7 +47,6 @@ public class MarvelParser {
                 names.add(name);
             }
         }
-        System.out.println("Ending parseData!!!!!");
         return map;
     }
 

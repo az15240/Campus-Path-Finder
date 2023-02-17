@@ -123,7 +123,6 @@ public class MarvelTestDriver {
         Graph g = new Graph();
         graphs.put(graphName, g);
         output.println("created graph " + graphName);
-        g.outputTester();
     }
 
     private void addNode(List<String> arguments) {
@@ -141,7 +140,6 @@ public class MarvelTestDriver {
         Graph g = graphs.get(graphName);
         g.addNode(new Node(nodeName));
         output.println("added node " + nodeName + " to " + graphName);
-        g.outputTester();
     }
 
     private void addEdge(List<String> arguments) {
@@ -164,7 +162,6 @@ public class MarvelTestDriver {
         Node ed = g.getNodeByName(childName);
         g.addEdge(new Edge(st, ed, edgeLabel));
         output.println("added edge " + edgeLabel + " from " + parentName + " to " + childName + " in " + graphName);
-        g.outputTester();
     }
 
     private void listNodes(List<String> arguments) {
@@ -188,7 +185,6 @@ public class MarvelTestDriver {
             output.print(" " + s);
         }
         output.println();
-        g.outputTester();
     }
 
     private void listChildren(List<String> arguments) {
@@ -216,7 +212,6 @@ public class MarvelTestDriver {
             }
         }
         output.println();
-        g.outputTester();
     }
 
     private void loadGraph(List<String> arguments) {
@@ -233,7 +228,6 @@ public class MarvelTestDriver {
         Graph g = MarvelPaths.loadGraph(fileName);
         graphs.put(graphName, g);
         output.println("loaded graph " + graphName);
-        g.outputTester();
     }
 
     private void findPath(List<String> arguments) {
@@ -269,7 +263,6 @@ public class MarvelTestDriver {
                 }
             }
         }
-        g.outputTester();
     }
 
     /**

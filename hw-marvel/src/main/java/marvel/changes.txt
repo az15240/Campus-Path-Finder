@@ -1,3 +1,17 @@
 Briefly list any changes you made to your graph class during hw-marvel,
 and why you made those changes.
 
+I removed all unnecessary functionalities not used in the program, because they would cost so long time and resources to
+run. Also, they are some really bad designs so I decide to remove all of them. It also prevents me from maintaining them
+in the future.
+In particular, I almost cleared all previous reliance on using names or labels of nodes and edges in my graph class. Each
+time when my program is finding a node or edge by its name or label, the program have to go through the collection of
+the node or edge to find the thing I want. This costs a lot of time so I removed them. I reconstructed everything. Instead
+it can simply create a new node or edge and thanks to the new .equals method, nodes are recognized by their name and
+edges are recognized by their label and start and end nodes. It saves a lot of time and eventually allows the program to
+run under 30 seconds.
+
+Also, I changed the representation invariant of my Edge class and Graph class. Because now the labels, being comic book
+names, can be same, so the previous invariant saying that all Edges should have different label now does not hold. I
+simply removed this representation invariant and changes the find edge method in Graph class by requiring two parameters
+for the start node and the end node.

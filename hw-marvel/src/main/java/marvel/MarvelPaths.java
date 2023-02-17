@@ -15,6 +15,9 @@ import static marvel.MarvelParser.parseData;
  *  with an edge labeled with the book's name. Two edges from two directions should be established. Note that it
  *  does not allow edges pointing to the character itself. Also, the graph can contain multiple edges with the same
  *  start and end nodes. All Nodes must have different names.
+ *
+ *  Note that this class only contains static methods and are never constructed, so it does not represent an ADT
+ *  and it does not have any RI/AFs.
  */
 public class MarvelPaths {
 
@@ -24,7 +27,6 @@ public class MarvelPaths {
      * @param fileName the csv file to be read from.
      * @spec.requires filename is a valid file in the resources/data folder.
      * @spec.effects Constructs a new graph with information read from a .csv file.
-     * @spec.modifies this
      * @return the graph created from the .csv file
      */
     public static Graph loadGraph(String fileName) {
@@ -33,6 +35,7 @@ public class MarvelPaths {
         for (String bookName : data.keySet()) {
             Set<String> set = data.get(bookName);
             List<String> names = new ArrayList<>(set);
+            // store the characters names in a list for easier edge constructions
             for (String name : names) {
                 graph.addNode(new Node(name));
             }
@@ -42,45 +45,12 @@ public class MarvelPaths {
                         String name1 = names.get(i);
                         String name2 = names.get(j);
                         graph.addEdge(new Edge(new Node(name1), new Node(name2), bookName));
-                        // graph.addEdge(new Edge(new Node(name2), new Node(name1), bookName));
                     }
                 }
             }
         }
         return graph;
     }
-                //  System.out.println("praseData ends. data has " + data.size() + " entries.");
-            // use List to store the names that makes it easier to use index that helps
-            // create mutual connections on names
-
-
-                // if (graph.getAllNodes().contains() == null) {
-                // }
-
-
-//            if (names.size() == 1) {
-//                graph.addNode(new Node(names.get(0)));
-//                // System.out.println("Stuck here 41");
-//            } else {
-
-//                        if (graph.getNodeByName(name1) == null) {
-//                            graph.addNode(new Node(name1));
-//                        }
-//                        if (graph.getNodeByName(name2) == null) {
-//                            graph.addNode(new Node(name2));
-//                        }
-//                        graph.addNode(new Node(name1));
-//                        graph.addNode(new Node(name2));
-//                        Node n1 = graph.getNodeByName(name1);
-//                        Node n2 = graph.getNodeByName(name2);
-
-                       //  System.out.println("Edge info: from " + n1.getName() + " to " + n2.getName() + " via " + bookName);
-                        // add edges on both sides
-                        // System.out.println("Stuck here 58");
-                    // System.out.println("Stuck here 60");
-                // System.out.println("Stuck here 62");
-//        }
-
 
     /**
      * Using BFS algorithm to find a lexicographically least path from two nodes.
@@ -108,14 +78,11 @@ public class MarvelPaths {
             }
             Map<String, List<String>> nextOnes = g.getChildrenFromNode(n);
             List<String> sons = new ArrayList<>(nextOnes.keySet());
-            // Collections.sort(sons); // sort the children to give a lexicographically least path
+            // no need to sort the children anymore thanks to the use of TreeMap in getChildrenFromNode
             for (String son : sons) { // next: find all edges from n to son. son is the string of the target
                 List<String> edges = nextOnes.get(son); // edges is the List of edges that connects n to son
                 Collections.sort(edges); // sort the edges on a same child to give a lexicographically least path
-                for (String edgeName : edges) { // n -edgeName-> son
-                    // Edge e = g.getEdgeByLabel(edgeName, n, son);
-                    // List<Edge> edgesEdge = g.getAllEdges().get(n);
-                    //Node target = g.getNodeByName(son);
+                for (String edgeName : edges) { // n -[edgeName]-> son
                     Node target = new Node(son);
                     if (!m.containsKey(target)) { // m is not visited yet, so add it and the path in the map
                         List<Edge> temp = new ArrayList<>(m.get(n));
@@ -135,7 +102,7 @@ public class MarvelPaths {
     }
 
     /**
-     * Main class to allow a user to interact with your program from the command line.
+     * Main class to allow a user to interact with the program from the command line.
      *
      * @param args arguments from command line
      */
@@ -177,4 +144,3 @@ public class MarvelPaths {
         }
     }
 }
-
