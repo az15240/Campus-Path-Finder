@@ -93,4 +93,16 @@ public class Node {
         value = v;
         checkRep();
     }
+
+    public boolean equals(Object other) {
+        if (!(other instanceof Node)) {
+            return false;
+        }
+        Node n = (Node) other;
+        return this.name.equals(n.name);
+    }
+
+    public int hashCode() {
+        return this.name.hashCode();
+    }
 }

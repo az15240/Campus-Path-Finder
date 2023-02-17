@@ -86,6 +86,7 @@ public class Graph {
      */
     public void addNode(Node node) {
         if (getNodeByName(node.getName()) == null) {
+        // if (!nodes.contains(node)) {
             nodes.add(node);
         }
         checkRep();
@@ -165,14 +166,18 @@ public class Graph {
      * @return the edge of the given label, or null if the label is not found.
      */
     public Edge getEdgeByLabel(String label, String start, String end) {
-        for (Node n : edges.keySet()) {
+        Node n = getNodeByName(start);
+        // Set<Edge> eset = edges.get(n);
+
+        
+        // for (Node n : edges.keySet()) {
             Set<Edge> eset = edges.get(n);
             for (Edge e : eset) {
                 if (e.getLabel().equals(label) && e.getStart().getName().equals(start) && e.getEnd().getName().equals(end)) {
                     return e;
                 }
             }
-        }
+        // }
         return null;
     }
 

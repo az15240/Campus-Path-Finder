@@ -30,33 +30,48 @@ public class MarvelPaths {
     public static Graph loadGraph(String fileName) {
         Graph graph = new Graph();
         Map<String, Set<String>> data = parseData(fileName);
+       //  System.out.println("praseData ends. data has " + data.size() + " entries.");
         for (String bookName : data.keySet()) {
             Set<String> set = data.get(bookName);
             List<String> names = new ArrayList<>(set);
             // use List to store the names that makes it easier to use index that helps
             // create mutual connections on names
-            if (names.size() == 1) {
-                graph.addNode(new Node(names.get(0)));
-            } else {
+
+            for (String name : names) {
+                if (graph.getNodeByName(name) == null) {
+                    graph.addNode(new Node(name));
+                }
+            }
+
+//            if (names.size() == 1) {
+//                graph.addNode(new Node(names.get(0)));
+//                // System.out.println("Stuck here 41");
+//            } else {
                 for (int i = 0; i < names.size(); i++) {
                     for (int j = i + 1; j < names.size(); j++) {
                         String name1 = names.get(i);
                         String name2 = names.get(j);
-                        if (graph.getNodeByName(name1) == null) {
-                            graph.addNode(new Node(name1));
-                        }
-                        if (graph.getNodeByName(name2) == null) {
-                            graph.addNode(new Node(name2));
-                        }
+//                        if (graph.getNodeByName(name1) == null) {
+//                            graph.addNode(new Node(name1));
+//                        }
+//                        if (graph.getNodeByName(name2) == null) {
+//                            graph.addNode(new Node(name2));
+//                        }
+//                        graph.addNode(new Node(name1));
+//                        graph.addNode(new Node(name2));
                         Node n1 = graph.getNodeByName(name1);
                         Node n2 = graph.getNodeByName(name2);
                         graph.addEdge(new Edge(n1, n2, bookName));
                         graph.addEdge(new Edge(n2, n1, bookName));
+                       //  System.out.println("Edge info: from " + n1.getName() + " to " + n2.getName() + " via " + bookName);
                         // add edges on both sides
+                        // System.out.println("Stuck here 58");
                     }
+                    // System.out.println("Stuck here 60");
                 }
+                // System.out.println("Stuck here 62");
             }
-        }
+//        }
         return graph;
     }
 

@@ -31,6 +31,10 @@ public class MarvelParser {
      */
     public static Map<String, Set<String>> parseData(String filename) {
         List<String> lines = readLines(filename);
+//        System.out.println("readLines successful. printing the top 10 lines:");
+//        for (int i = 0; i < 8; i++) {
+//            System.out.println(lines.get(i));
+//        }
         Map<String, Set<String>> map = new HashMap<>();
         for (String line : lines) {
             String name = line.substring(0, line.indexOf(','));
@@ -47,6 +51,7 @@ public class MarvelParser {
                 names.add(name);
             }
         }
+        System.out.println("Ending parseData!!!!!");
         return map;
     }
 

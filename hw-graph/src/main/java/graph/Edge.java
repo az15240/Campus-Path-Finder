@@ -128,4 +128,16 @@ public class Edge {
         label = l;
         checkRep();
     }
+
+    public boolean equals(Object other) {
+        if (!(other instanceof Edge)) {
+            return false;
+        }
+        Edge e = (Edge) other;
+        return this.label.equals(e.label) && this.start.equals(e.start) && this.end.equals(e.end);
+    }
+
+    public int hashCode() {
+        return this.label.hashCode() * 31 * 31 + this.start.hashCode() * 31 + this.end.hashCode();
+    }
 }
