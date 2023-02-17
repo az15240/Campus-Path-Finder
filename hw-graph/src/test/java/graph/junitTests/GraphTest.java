@@ -74,45 +74,17 @@ public class GraphTest {
     }
 
     @Test
-    public void testRemoveNode() {
-        Graph graph = makeFullGraphNodes();
-        Graph graph2 = makeFullGraphNodes();
-        graph.removeNode(n0);
-        graph2.removeNode(n0);
-        assertEquals(graph.getNodeByName("n0"), graph2.getNodeByName("n0"));
-        graph.removeNode(n1);
-        graph2.removeNode(n2);
-        graph.removeNode(n2);
-        graph2.removeNode(n1);
-        assertEquals(graph.getNodeByName("n1"), graph2.getNodeByName("n1"));
-    }
-
-    @Test
     public void testAddEdge() {
         Graph graph = makeFullGraphNodes();
         Graph graph2 = makeFullGraphNodes();
         graph.addEdge(e00Label);
         graph2.addEdge(e00Label);
-        assertEquals(graph.getEdgeByLabel("e00"), graph2.getEdgeByLabel("e00"));
+        assertEquals(graph.getEdgeByLabel("e00", "n0", "n0"), graph2.getEdgeByLabel("e00", "n0", "n0"));
         graph.addEdge(e01Label);
         graph2.addEdge(e02Label);
         graph.addEdge(e02Label);
         graph2.addEdge(e01Label);
-        assertEquals(graph.getEdgeByLabel("e01"), graph2.getEdgeByLabel("e01"));
-    }
-
-    @Test
-    public void testRemoveEdge() {
-        Graph graph = makeFullGraph();
-        Graph graph2 = makeFullGraph();
-        graph.removeEdge(e00);
-        graph2.removeEdge(e00);
-        assertEquals(graph.getEdgeByLabel("e00"), graph2.getEdgeByLabel("e00"));
-        graph.removeEdge(e01);
-        graph2.removeEdge(e02);
-        graph.removeEdge(e02);
-        graph2.removeEdge(e01);
-        assertEquals(graph.getEdgeByLabel("e01"), graph2.getEdgeByLabel("e01"));
+        assertEquals(graph.getEdgeByLabel("e01", "n0", "n1"), graph2.getEdgeByLabel("e01", "n0", "n1"));
     }
 
     @Test
@@ -158,14 +130,14 @@ public class GraphTest {
     @Test
     public void testGetEdgeByLabel() {
         Graph graph = makeFullGraph();
-        assertEquals(null, graph.getEdgeByLabel("does not exist!"));
-        assertEquals(e00Label, graph.getEdgeByLabel("e00"));
-        assertEquals(e01Label, graph.getEdgeByLabel("e01"));
-        assertEquals(e02Label, graph.getEdgeByLabel("e02"));
-        assertEquals(e11Label, graph.getEdgeByLabel("e11"));
-        assertEquals(e12Label, graph.getEdgeByLabel("e12"));
+        assertEquals(null, graph.getEdgeByLabel("does not exist!", "NA", "NA"));
+        assertEquals(e00Label, graph.getEdgeByLabel("e00", "n0", "n0"));
+        assertEquals(e01Label, graph.getEdgeByLabel("e01", "n0", "n1"));
+        assertEquals(e02Label, graph.getEdgeByLabel("e02", "n0", "n2"));
+        assertEquals(e11Label, graph.getEdgeByLabel("e11", "n1", "n1"));
+        assertEquals(e12Label, graph.getEdgeByLabel("e12", "n1", "n2"));
 
-        assertEquals(null, emtpyGraph.getEdgeByLabel("e00"));
+        assertEquals(null, emtpyGraph.getEdgeByLabel("e00", "n0", "n0"));
     }
 
     @Test
@@ -180,28 +152,4 @@ public class GraphTest {
         assertEquals(new HashMap<>(), emtpyGraph.getChildrenFromNode(n0));
     }
 
-    @Test
-    public void testGetParentsFromNode() {
-        Graph graph = makeFullGraph();
-        //Set<Node> st = new HashSet<Node>();
-        Map<String, String> st = new HashMap<>();
-        st.put("e00", "n0");
-        assertEquals(st, graph.getParentsFromNode(n0));
-        Map<String, String> st2 = new HashMap<>();
-        st2.put("e02", "n0");
-        st2.put("e12", "n1");
-        assertEquals(st2, graph.getParentsFromNode(n2));
-
-        assertEquals(new HashMap<>(), emtpyGraph.getParentsFromNode(n0));
-    }
-
-    @Test
-    public void testGetNeighborsFromNode() {
-        Graph graph = makeFullGraph();
-        Map<String, String> st = new HashMap<>();
-        st.put("e00", "n0");
-        st.put("e02", "n2");
-        st.put("e01", "n1");
-        assertEquals(st, graph.getNeighborsFromNode(n0));
-    }
 }

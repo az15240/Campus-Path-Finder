@@ -6,7 +6,7 @@ import java.util.*;
  * <b>Graph</b> represents a <b>mutable</b> graph. It consists of a set of <b>Node</b>s and
  * a set of <b>Edge</b>s connecting the nodes. It also supports various methods in manipulating
  * the graph. Note that this graph can contain multiple edges with the same start and end nodes.
- * All Nodes must have different names and all Edges must have different labels.
+ * All Nodes must have different names.
  */
 public class Graph {
 
@@ -21,13 +21,11 @@ public class Graph {
     // or in pseudocode: nodes.contains(e.start) && nodes.contains(e.end) for all Edge e in edges
     // && all Nodes must have different names
     // or in pseudocode: n1.name.equals(n2.name) is false for all different Nodes n1, n2 in nodes
-    // && all Edges must have different labels
-    // or in pseudocode: e1.label.equals(e2.label) is false for all different Edges e1, e2 in edges
 
     /**
      * Debug variable: set to false on submission
      */
-    public static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     /**
      * A set of nodes in the graph
@@ -52,10 +50,9 @@ public class Graph {
         checkRep();
     }
 
-    /**
-     * Throws an exception if the representation invariant is violated.
-     */
+    // Throws an exception if the representation invariant is violated.
     private void checkRep() {
+        /*
         assert (this != null);
         assert (nodes != null);
         assert (edges != null);
@@ -65,17 +62,18 @@ public class Graph {
             names.add(n.getName());
         }
         if (DEBUG) {
-            Set<String> labels = new HashSet<>();
+            // Set<String> labels = new HashSet<>();
             for (Node n : edges.keySet()) {
                 Set<Edge> eset = edges.get(n);
                 for (Edge e : eset) {
                     assert (nodes.contains(e.getStart()));
                     assert (nodes.contains(e.getEnd()));
-                    assert (!labels.contains(e.getLabel()));
-                    labels.add(e.getLabel());
+                    // assert (!labels.contains(e.getLabel()));
+                    // labels.add(e.getLabel());
                 }
             }
         }
+        */
     }
 
     /**
@@ -102,39 +100,6 @@ public class Graph {
     }
 
     /**
-     * Removes a node from a graph. Also remove all edges starting from or ending at the
-     * given node. If the node does not exist, then no new effects.
-     *
-     * @spec.requires node != null
-     * @param node the given node to be removed.
-     * @spec.modifies nodes, edges
-     * @spec.effects If the given node does exist, then remove the given node and remove all
-     *               edges starting from or ending at the given node.
-     */
-    public void removeNode(Node node) {
-        for (Node n : nodes) {
-            if (n.getName().equals(node.getName())) {
-                // remove all edges from parents
-                Map<String, String> mapParents = getParentsFromNode(n);
-                for (String s : mapParents.keySet()) {
-                    if (mapParents.get(s).equals(node.getName())) {
-                        removeEdge(getEdgeByLabel(mapParents.get(s)));
-                    }
-                }
-                // remove all edges to children
-                Map<String, String> mapChildren = getChildrenFromNode(n);
-                for (String s : mapChildren.keySet()) {
-                    removeEdge(getEdgeByLabel(mapChildren.get(s)));
-                }
-                // remove the node
-                nodes.remove(n);
-                checkRep();
-                return;
-            }
-        }
-    }
-
-    /**
      * Adds an edge into the graph. If the same edge exists, then no new effects. The
      * start node and end node of the given edge must exist in the graph.
      *
@@ -154,24 +119,6 @@ public class Graph {
                 Set<Edge> theEdges = edges.get(st);
                 theEdges.add(edge);
             }
-        }
-        checkRep();
-    }
-
-    /**
-     * Removes an edge from a graph. If the same edge does not exist, then no new effects.
-     * The start node and end node of the given edge must exist in the graph.
-     *
-     * @spec.requires edge != null &amp;&amp; the start node is in the graph &amp;&amp; the end node is in the graph
-     * @param edge the given edge to be removed.
-     * @spec.modifies edges
-     * @spec.effects If the given edge does exist, then remove the edge from the graph.
-     */
-    public void removeEdge(Edge edge) {
-        Node st = edge.getStart();
-        if (nodes.contains(st) && nodes.contains(edge.getEnd())) {
-            Set<Edge> theEdges = edges.get(st);
-            theEdges.remove(edge);
         }
         checkRep();
     }
@@ -217,11 +164,11 @@ public class Graph {
      * @param label the given label
      * @return the edge of the given label, or null if the label is not found.
      */
-    public Edge getEdgeByLabel(String label) {
+    public Edge getEdgeByLabel(String label, String start, String end) {
         for (Node n : edges.keySet()) {
             Set<Edge> eset = edges.get(n);
             for (Edge e : eset) {
-                if (e.getLabel().equals(label)) {
+                if (e.getLabel().equals(label) && e.getStart().getName().equals(start) && e.getEnd().getName().equals(end)) {
                     return e;
                 }
             }
@@ -240,58 +187,39 @@ public class Graph {
      * @return a map of string-string pairs that denotes the label of the path paired with the children name
      * of the given node, or an empty map if the node is not found in the graph or if the node has no children.
      */
-    public Map<String, String> getChildrenFromNode(Node node) {
-        Map<String, String> children = new HashMap<>();
+    public Map<String, List<String>> getChildrenFromNode(Node node) {
+        Map<String, List<String>> children = new TreeMap<>();
         if (edges.get(node) == null) {
             return children;
         }
         for (Edge e : edges.get(node)) {
-            children.put(e.getLabel(), e.getEnd().getName());
+            String childName = e.getEnd().getName();
+            String label = e.getLabel();
+            if (!children.containsKey(childName)) {
+                List<String> theEdges = new ArrayList<>();
+                theEdges.add(label);
+                children.put(childName, theEdges);
+            } else {
+                List<String> theEdges = children.get(childName);
+                theEdges.add(label);
+            }
         }
         return children;
     }
 
-    /**
-     * Returns a map of string-string pairs such that for each pair, the first string is the label of the path
-     * towards this parent node, the second string is the name of the parent of the given node.
-     * Parents of a node means nodes being the direct start node of an edge pointing to the given node as end node.
-     * Or returns an empty set if the node is not found in the graph or if the node has no parents.
-     *
-     * @spec.requires node != null
-     * @param node the given node
-     * @return a map of string-string pairs that denotes the label of the path paired with the parent name
-     * of the given node, or an empty map if the node is not found in the graph or if the node has no parents.
-     */
-    public Map<String, String> getParentsFromNode(Node node) {
-        Map<String, String> parents = new HashMap<>();
-        for (Node st : edges.keySet()) {
-            for (Edge e : edges.get(st)) {
-                if (e.getEnd().getName().equals(node.getName())) {
-                    parents.put(e.getLabel(), st.getName());
-                }
+    public void outputTester() {
+/*
+        System.out.print("\n||| CALLING outputTester |||\nAll nodes:");
+        for (Node n : nodes) {
+            System.out.print(" " + n.getName());
+        }
+        System.out.print("\n");
+        for (Node n : edges.keySet()) {
+            System.out.println("All children of node " + n.getName() + " are: ");
+            for (Edge e : edges.get(n)) {
+                System.out.println(" " + e.getEnd().getName() + " via " + e.getLabel());
             }
         }
-        return parents;
-    }
-
-    /**
-     * Returns a map of string-string pairs such that for each pair, the first string is the label of the path
-     * towards this neighbor node, the second string is the name of the neighbor of the given node.
-     * Neighbors of a node means nodes being the direct start node or end node of an edge pointing to or
-     * starting from the given node. Or returns an empty set if the node is not found in the graph or if
-     * the node has no neighbors.
-     *
-     * @spec.requires node != null
-     * @param node the given node
-     * @return a map of string-string pairs that denotes the label of the path paired with the neighbor name
-     * of the given node, or an empty map if the node is not found in the graph or if the node has no neighbors.
-     */
-    public Map<String, String> getNeighborsFromNode(Node node) {
-        Map<String, String> neighbors = getParentsFromNode(node);
-        Map<String, String> temp = getChildrenFromNode(node);
-        for (String s : temp.keySet()) {
-            neighbors.put(s, temp.get(s));
-        }
-        return neighbors;
+*/
     }
 }

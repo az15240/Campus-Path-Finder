@@ -193,22 +193,24 @@ public class GraphTestDriver {
 
     private void listChildren(String graphName, String parentName) {
         Graph g = graphs.get(graphName);
-        Map<String, String> pairs = g.getChildrenFromNode(g.getNodeByName(parentName));
-        Map<String, Set<String>> map = new TreeMap<>();
-        for (String label : pairs.keySet()) {
-            String nodeName = pairs.get(label);
-            if (!map.containsKey(nodeName)) { // Key not found, so create a new Set
-                Set<String> theLabels = new TreeSet<String>();
-                map.put(pairs.get(label), theLabels);
-                theLabels.add(label);
-            } else { // Key is found, then just add the word to the Mapped Set
-                Set<String> theLabels = map.get(nodeName);
-                theLabels.add(label);
-            }
+        Map<String, List<String>> pairs = g.getChildrenFromNode(g.getNodeByName(parentName));
+        // Map<String, Set<String>> map = new TreeMap<>();
+        for (String nodeName : pairs.keySet()) {
+            Collections.sort(pairs.get(nodeName));
         }
+//            List<String> label = pairs.get(nodeName);
+//            if (!map.containsKey(nodeName)) { // Key not found, so create a new Set
+//                Set<String> theLabels = new TreeSet<>();
+//                map.put(pairs.get(label), theLabels);
+//                theLabels.add(label);
+//            } else { // Key is found, then just add the word to the Mapped Set
+//                Set<String> theLabels = map.get(nodeName);
+//                theLabels.add(label);
+//            }
+//        }
         output.print("the children of " + parentName + " in " + graphName + " are:");
-        for (String nodeName : map.keySet()) {
-            for (String labelName : map.get(nodeName)) {
+        for (String nodeName : pairs.keySet()) {
+            for (String labelName : pairs.get(nodeName)) {
                 output.print(" " + nodeName + "(" + labelName + ")");
             }
         }
