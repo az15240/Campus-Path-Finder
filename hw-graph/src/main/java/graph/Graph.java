@@ -85,8 +85,8 @@ public class Graph {
      * @spec.effects If the given node does not exist, then add a new node into the graph.
      */
     public void addNode(Node node) {
-        if (getNodeByName(node.getName()) == null) {
-        // if (!nodes.contains(node)) {
+        // if (getNodeByName(node.getName()) == null) {
+        if (!nodes.contains(node)) {
             nodes.add(node);
         }
         checkRep();
@@ -165,15 +165,14 @@ public class Graph {
      * @param label the given label
      * @return the edge of the given label, or null if the label is not found.
      */
-    public Edge getEdgeByLabel(String label, String start, String end) {
-        Node n = getNodeByName(start);
+    public Edge getEdgeByLabel(String label, Node start, String end) {
+        // Node n = getNodeByName(start);
         // Set<Edge> eset = edges.get(n);
 
-        
         // for (Node n : edges.keySet()) {
-            Set<Edge> eset = edges.get(n);
+            Set<Edge> eset = edges.get(start);
             for (Edge e : eset) {
-                if (e.getLabel().equals(label) && e.getStart().getName().equals(start) && e.getEnd().getName().equals(end)) {
+                if (e.getLabel().equals(label) && /*e.getStart().getName().equals(start) && */e.getEnd().getName().equals(end)) {
                     return e;
                 }
             }

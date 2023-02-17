@@ -30,27 +30,39 @@ public class MarvelPaths {
     public static Graph loadGraph(String fileName) {
         Graph graph = new Graph();
         Map<String, Set<String>> data = parseData(fileName);
-       //  System.out.println("praseData ends. data has " + data.size() + " entries.");
         for (String bookName : data.keySet()) {
             Set<String> set = data.get(bookName);
             List<String> names = new ArrayList<>(set);
+            for (String name : names) {
+                graph.addNode(new Node(name));
+            }
+            for (int i = 0; i < names.size(); i++) {
+                for (int j = 0; j < names.size(); j++) {
+                    if (i != j) {
+                        String name1 = names.get(i);
+                        String name2 = names.get(j);
+                        graph.addEdge(new Edge(new Node(name1), new Node(name2), bookName));
+                        // graph.addEdge(new Edge(new Node(name2), new Node(name1), bookName));
+                    }
+                }
+            }
+        }
+        return graph;
+    }
+                //  System.out.println("praseData ends. data has " + data.size() + " entries.");
             // use List to store the names that makes it easier to use index that helps
             // create mutual connections on names
 
-            for (String name : names) {
-                if (graph.getNodeByName(name) == null) {
-                    graph.addNode(new Node(name));
-                }
-            }
+
+                // if (graph.getAllNodes().contains() == null) {
+                // }
+
 
 //            if (names.size() == 1) {
 //                graph.addNode(new Node(names.get(0)));
 //                // System.out.println("Stuck here 41");
 //            } else {
-                for (int i = 0; i < names.size(); i++) {
-                    for (int j = i + 1; j < names.size(); j++) {
-                        String name1 = names.get(i);
-                        String name2 = names.get(j);
+
 //                        if (graph.getNodeByName(name1) == null) {
 //                            graph.addNode(new Node(name1));
 //                        }
@@ -59,21 +71,16 @@ public class MarvelPaths {
 //                        }
 //                        graph.addNode(new Node(name1));
 //                        graph.addNode(new Node(name2));
-                        Node n1 = graph.getNodeByName(name1);
-                        Node n2 = graph.getNodeByName(name2);
-                        graph.addEdge(new Edge(n1, n2, bookName));
-                        graph.addEdge(new Edge(n2, n1, bookName));
+//                        Node n1 = graph.getNodeByName(name1);
+//                        Node n2 = graph.getNodeByName(name2);
+
                        //  System.out.println("Edge info: from " + n1.getName() + " to " + n2.getName() + " via " + bookName);
                         // add edges on both sides
                         // System.out.println("Stuck here 58");
-                    }
                     // System.out.println("Stuck here 60");
-                }
                 // System.out.println("Stuck here 62");
-            }
 //        }
-        return graph;
-    }
+
 
     /**
      * Using BFS algorithm to find a lexicographically least path from two nodes.
@@ -96,21 +103,24 @@ public class MarvelPaths {
         m.put(st, new ArrayList<>());
         while (!q.isEmpty()) {
             Node n = q.remove();
-            if (n.getName().equals(ed.getName())) { // destination found
+            if (n.equals(ed)) { // destination found
                 return m.get(n);
             }
             Map<String, List<String>> nextOnes = g.getChildrenFromNode(n);
             List<String> sons = new ArrayList<>(nextOnes.keySet());
-            Collections.sort(sons); // sort the children to give a lexicographically least path
-            for (String son : sons) {
-                List<String> edges = nextOnes.get(son);
+            // Collections.sort(sons); // sort the children to give a lexicographically least path
+            for (String son : sons) { // next: find all edges from n to son. son is the string of the target
+                List<String> edges = nextOnes.get(son); // edges is the List of edges that connects n to son
                 Collections.sort(edges); // sort the edges on a same child to give a lexicographically least path
-                for (String edgeName : edges) {
-                    Edge e = g.getEdgeByLabel(edgeName, n.getName(), son);
-                    Node target = g.getNodeByName(son);
+                for (String edgeName : edges) { // n -edgeName-> son
+                    // Edge e = g.getEdgeByLabel(edgeName, n, son);
+                    // List<Edge> edgesEdge = g.getAllEdges().get(n);
+                    //Node target = g.getNodeByName(son);
+                    Node target = new Node(son);
                     if (!m.containsKey(target)) { // m is not visited yet, so add it and the path in the map
                         List<Edge> temp = new ArrayList<>(m.get(n));
-                        temp.add(e);
+                        Edge newEdge = new Edge(n, target, edgeName);
+                        temp.add(newEdge);
                         m.put(target, temp);
                         q.add(target);
                     }
@@ -133,7 +143,7 @@ public class MarvelPaths {
         Graph g = MarvelPaths.loadGraph("marvel.csv");
         Scanner scan = new Scanner(System.in);
         while (true) {
-            System.out.println("Welcome to the MarvelPaths program.\n" +
+            System.out.println("Welcome to the MarvelPaths program :)\n" +
                     "You may input the two marvel superhero's names and the program will print a lexicographically " +
                     "least path connecting them.\n" +
                     "Enter \"QUIT\" to exit the program anytime.\n" +
@@ -167,5 +177,4 @@ public class MarvelPaths {
         }
     }
 }
-
 

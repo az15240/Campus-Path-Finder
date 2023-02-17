@@ -1,0 +1,11 @@
+# Tests marvel.csv custom data. Data is adapted from https://edstem.org/us/courses/32028/discussion/2592476
+
+LoadGraph marvel marvel.csv
+
+FindPath marvel IRON-MAN/TONY-STARK KANGAROO-II
+
+FindPath marvel GOOM MR.-FANTASTIC/REED-R
+
+FindPath marvel SHA-SHAN SQUIRREL-GIRL
+
+FindPath marvel GOOM HOFFMAN

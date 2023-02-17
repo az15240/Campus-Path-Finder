@@ -71,7 +71,7 @@ public class MarvelPathsTest {
         Graph graph = MarvelPaths.loadGraph("staffSuperheroes.csv");
         Graph graph2 = makeFullGraph();
         assertEquals(graph.getNodeByName("Ernst-the-Bicycling-Wizard").getName(), graph2.getNodeByName("Ernst-the-Bicycling-Wizard").getName());
-        assertEquals(graph.getEdgeByLabel("CSE331", "Ernst-the-Bicycling-Wizard", "Perkins-the-Magical-Singing-Instructor").getLabel(), graph2.getEdgeByLabel("CSE331", "Ernst-the-Bicycling-Wizard", "Perkins-the-Magical-Singing-Instructor").getLabel());
+        assertEquals(graph.getEdgeByLabel("CSE331", Ernst, "Perkins-the-Magical-Singing-Instructor").getLabel(), graph2.getEdgeByLabel("CSE331", Ernst, "Perkins-the-Magical-Singing-Instructor").getLabel());
         Graph g = MarvelPaths.loadGraph("marvel.csv");
         System.out.println(g.getAllNodes().size());
         System.out.println(g.getAllEdges().size());
