@@ -1,0 +1,37 @@
+# Test alphabetically least paths. Only four nodes are provided but various edges are between them.
+
+CreateGraph g
+
+AddNode g n1
+AddNode g n2
+AddNode g n3
+AddNode g n4
+
+AddEdge g n1 n2 e2
+AddEdge g n1 n2 e3
+AddEdge g n1 n3 e1
+AddEdge g n1 n3 e4
+AddEdge g n2 n4 e7
+AddEdge g n2 n4 e8
+AddEdge g n3 n4 e5
+AddEdge g n3 n4 e6
+
+ListNodes g
+
+ListChildren g n1
+
+FindPath g n1 n2
+
+FindPath g n1 n3
+
+FindPath g n1 n4
+
+FindPath g n2 n3
+
+FindPath g n2 n4
+
+FindPath g n3 n4
+
+FindPath g n1 n1
+
+FindPath g n2 n1

@@ -68,20 +68,24 @@ public class MarvelPaths {
             Set<String> set = data.get(bookName);
             List<String> names = new ArrayList<>();
             names.addAll(set);
-            for (int i = 0; i < names.size(); i++) {
-                for (int j = i + 1; j < names.size(); j++) {
-                    String name1 = names.get(i);
-                    String name2 = names.get(j);
-                    if (graph.getNodeByName(name1) == null) {
-                        graph.addNode(new Node(name1));
+            if (names.size() == 1) {
+                graph.addNode(new Node(names.get(0)));
+            } else {
+                for (int i = 0; i < names.size(); i++) {
+                    for (int j = i + 1; j < names.size(); j++) {
+                        String name1 = names.get(i);
+                        String name2 = names.get(j);
+                        if (graph.getNodeByName(name1) == null) {
+                            graph.addNode(new Node(name1));
+                        }
+                        if (graph.getNodeByName(name2) == null) {
+                            graph.addNode(new Node(name2));
+                        }
+                        Node n1 = graph.getNodeByName(name1);
+                        Node n2 = graph.getNodeByName(name2);
+                        graph.addEdge(new Edge(n1, n2, bookName));
+                        graph.addEdge(new Edge(n2, n1, bookName));
                     }
-                    if (graph.getNodeByName(name2) == null) {
-                        graph.addNode(new Node(name2));
-                    }
-                    Node n1 = graph.getNodeByName(name1);
-                    Node n2 = graph.getNodeByName(name2);
-                    graph.addEdge(new Edge(n1, n2, bookName));
-                    graph.addEdge(new Edge(n2, n1, bookName));
                 }
             }
         }
@@ -108,6 +112,7 @@ public class MarvelPaths {
             System.out.println("\n\n");*/
             for (String son : sons) {
                 List<String> edges = nextOnes.get(son);
+                Collections.sort(edges);
                 for (String edgeName : edges) {
                     Edge e = g.getEdgeByLabel(edgeName, n.getName(), son);
                     Node target = g.getNodeByName(son);

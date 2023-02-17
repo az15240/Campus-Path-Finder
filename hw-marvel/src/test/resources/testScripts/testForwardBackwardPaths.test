@@ -1,0 +1,15 @@
+# Tests data set from UWProfessorCustom.csv. Adapted from https://edstem.org/us/courses/32028/discussion/2601400.
+# This file tests the forward and backward paths between two nodes. They might not necessarily be the
+# opposite orders because we only care about the lexicographically least path.
+
+LoadGraph g UWProfessorsCustom.csv
+
+ListNodes g
+
+FindPath g Schafer Grossman
+
+FindPath g Grossman Schafer
+
+FindPath g A.Rao Thachuk
+
+FindPath g Thachuk A.Rao

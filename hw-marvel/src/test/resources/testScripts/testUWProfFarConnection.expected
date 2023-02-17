@@ -1,0 +1,29 @@
+# Tests data set from UWProfessorCustom.csv. Adapted from https://edstem.org/us/courses/32028/discussion/2601400.
+# This file tests longer paths. are short ones with maximum of 2 edges.
+
+loaded graph g
+
+g contains: A.Rao Beame Grossman Hsia J.Lee Karlin Kohlbrenner Kohno Leang Maas OveisGharan Perkins R.Lin Ri.Anderson Roesner Ru.Anderson Schafer Tang Tessaro Thachuk Tsun Weber Wilcox Y.Lee Zatloukal
+
+path from Ru.Anderson to R.Lin:
+Ru.Anderson to Weber via 332
+Weber to Tessaro via 312
+Tessaro to R.Lin via 490C
+
+path from Schafer to Grossman:
+Schafer to Ru.Anderson via 391
+Ru.Anderson to Hsia via 351
+Hsia to Perkins via 333
+Perkins to Wilcox via 331
+Wilcox to Grossman via 341
+
+path from Thachuk to Y.Lee:
+Thachuk to Hsia via 333
+Hsia to Ru.Anderson via 351
+Ru.Anderson to Weber via 332
+Weber to Y.Lee via 421
+
+path from OveisGharan to Perkins:
+OveisGharan to Weber via 421
+Weber to Zatloukal via 311
+Zatloukal to Perkins via 331

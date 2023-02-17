@@ -1,0 +1,14 @@
+# Tests data set from UWProfessorCustom.csv. Adapted from https://edstem.org/us/courses/32028/discussion/2601400.
+# This file tests longer paths. are short ones with maximum of 2 edges.
+
+LoadGraph g UWProfessorsCustom.csv
+
+ListNodes g
+
+FindPath g Ru.Anderson R.Lin
+
+FindPath g Schafer Grossman
+
+FindPath g Thachuk Y.Lee
+
+FindPath g OveisGharan Perkins
