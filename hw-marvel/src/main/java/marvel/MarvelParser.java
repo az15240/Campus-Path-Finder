@@ -26,25 +26,27 @@ public class MarvelParser {
      *
      * @param filename The file that will be read.
      * @spec.requires filename is a valid file in the resources/data folder.
+     * @return a map of String-Sring Set pair that contains the data. The first String is the
+     *         book name and the String Set is all marvel characters in the book.
      */
     public static Map<String, Set<String>> parseData(String filename) {
         List<String> lines = readLines(filename);
-
         Map<String, Set<String>> map = new HashMap<>();
-
         for (String line : lines) {
             String name = line.substring(0, line.indexOf(','));
             String book = line.substring(line.indexOf(',') + 1);
             if (map.containsKey(book)) {
+                // if the book name is in the map, then just get it from the map and add our name
                 Set<String> names = map.get(book);
                 names.add(name);
             } else {
+                // if the book name is not in the map, then first construct and initialize it, then
+                // add it in the map
                 Set<String> names = new HashSet<>();
                 map.put(book, names);
                 names.add(name);
             }
         }
-
         return map;
     }
 

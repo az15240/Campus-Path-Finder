@@ -209,18 +209,6 @@ public class MarvelTestDriver {
             Collections.sort(pairs.get(nodeName));
         }
 
-//        Map<String, Set<String>> map = new TreeMap<>(); // maps an end node to a set of all edges pointing to the end node
-//        for (String label : pairs.keySet()) {
-//            String nodeName = pairs.get(label);
-//            if (!map.containsKey(nodeName)) { // Key not found, so create a new Set
-//                Set<String> theLabels = new TreeSet<String>();
-//                map.put(pairs.get(label), theLabels);
-//                theLabels.add(label);
-//            } else { // Key is found, then just add the word to the Mapped Set
-//                Set<String> theLabels = map.get(nodeName);
-//                theLabels.add(label);
-//            }
-//        }
         output.print("the children of " + parentName + " in " + graphName + " are:");
         for (String nodeName : pairs.keySet()) {
             for (String labelName : pairs.get(nodeName)) {
