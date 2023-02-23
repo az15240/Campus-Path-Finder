@@ -12,6 +12,7 @@
 package pathfinder.textInterface;
 
 import pathfinder.CampusMap;
+import pathfinder.datastructures.Point;
 
 /**
  * Pathfinder represents a complete application capable of responding to user prompts to provide
@@ -27,7 +28,7 @@ public class Pathfinder {
      * @param args The command-line arguments provided to the system.
      */
     public static void main(String[] args) {
-        CampusMap map = new CampusMap();
+        CampusMap<Point> map = new CampusMap<>();
         TextInterfaceView view = new TextInterfaceView();
         TextInterfaceController controller = new TextInterfaceController(map, view);
         //

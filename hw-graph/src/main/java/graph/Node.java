@@ -4,7 +4,7 @@ package graph;
  * <b>Node</b> represents a <b>mutable</b> node in a graph. It includes a name and a
  * optional value for the node. Two <b>Node</b>s are equal if they have the same name.
  */
-public class Node {
+public class Node<E> {
 
     // Abstraction Function:
     // Node n, represents a node in a graph.
@@ -22,7 +22,7 @@ public class Node {
     /**
      * Value of the node, in integer
      */
-    private int value;
+    private E value;
 
     /**
      * Constructs a new Node with default value 0.
@@ -32,7 +32,7 @@ public class Node {
      */
     public Node(String n) {
         name = n;
-        value = Integer.MIN_VALUE;
+        value = null;
     }
 
     /**
@@ -42,11 +42,10 @@ public class Node {
      * @param v value of the node
      * @spec.effects Constructs a new Node with given name n and given value v.
      */
-    public Node(String n, int v) {
+    public Node(String n, E v) {
         name = n;
         value = v;
     }
-
 
     // Throws an exception if the representation invariant is violated.
     private void checkRep() {
@@ -78,7 +77,7 @@ public class Node {
      *
      * @return the value of the current node.
      */
-    public int getValue() {
+    public E getValue() {
         return value;
     }
 
@@ -88,7 +87,7 @@ public class Node {
      * @param v the given value
      * @spec.modifies value
      */
-    public void setValue(int v) {
+    public void setValue(E v) {
         value = v;
         checkRep();
     }
@@ -103,10 +102,10 @@ public class Node {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Node)) {
+        if (!(other instanceof Node<?>)) {
             return false;
         }
-        Node n = (Node) other;
+        Node<?> n = (Node<?>) other;
         return this.name.equals(n.name);
     }
 

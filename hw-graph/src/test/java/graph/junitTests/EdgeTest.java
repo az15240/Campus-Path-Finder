@@ -16,38 +16,38 @@ public class EdgeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
-    private Node n0 = new Node("n0", 0);
-    private Node n1 = new Node("n1");
-    private Node n2 = new Node("n2");
-    private Edge e00 = new Edge(n0, n0);
-    private Edge e01 = new Edge(n0, n1);
-    private Edge e02 = new Edge(n0, n2);
-    private Edge e11 = new Edge(n1, n1);
-    private Edge e12 = new Edge(n1, n2);
-    private Edge e00Label = new Edge(n0, n0, "e00");
-    private Edge e01Label = new Edge(n0, n1, "e01");
-    private Edge e02Label = new Edge(n0, n2, "e02");
-    private Edge e11Label = new Edge(n1, n1, "e11");
-    private Edge e12Label = new Edge(n1, n2, "e12");
+    private Node<Integer> n0 = new Node<>("n0", 0);
+    private Node<Integer> n1 = new Node<>("n1");
+    private Node<Integer> n2 = new Node<>("n2");
+    private Edge<Integer, String> e00 = new Edge<>(n0, n0);
+    private Edge<Integer, String> e01 = new Edge<>(n0, n1);
+    private Edge<Integer, String> e02 = new Edge<>(n0, n2);
+    private Edge<Integer, String> e11 = new Edge<>(n1, n1);
+    private Edge<Integer, String> e12 = new Edge<>(n1, n2);
+    private Edge<Integer, String> e00Label = new Edge<>(n0, n0, "e00");
+    private Edge<Integer, String> e01Label = new Edge<>(n0, n1, "e01");
+    private Edge<Integer, String> e02Label = new Edge<>(n0, n2, "e02");
+    private Edge<Integer, String> e11Label = new Edge<>(n1, n1, "e11");
+    private Edge<Integer, String> e12Label = new Edge<>(n1, n2, "e12");
 
     @Test
     public void testConstructorNoLabel() {
-        new Edge(n0,n0);
-        new Edge(n0,n1);
-        new Edge(n0,n2);
-        new Edge(n1,n0);
-        new Edge(n1,n1);
-        new Edge(n1,n2);
+        new Edge<>(n0,n0);
+        new Edge<>(n0,n1);
+        new Edge<>(n0,n2);
+        new Edge<>(n1,n0);
+        new Edge<>(n1,n1);
+        new Edge<>(n1,n2);
     }
 
     @Test
     public void testConstructorWithLabel() {
-        new Edge(n0,n0,"self");
-        new Edge(n0,n1,"");
-        new Edge(n0,n2,"test");
-        new Edge(n1,n0,"label");
-        new Edge(n1,n1,"e11");
-        new Edge(n1,n2,"e12");
+        new Edge<>(n0,n0,"self");
+        new Edge<>(n0,n1,"");
+        new Edge<>(n0,n2,"test");
+        new Edge<>(n1,n0,"label");
+        new Edge<>(n1,n1,"e11");
+        new Edge<>(n1,n2,"e12");
     }
 
     @Test
@@ -80,11 +80,11 @@ public class EdgeTest {
 
     @Test
     public void testGetLabelNoLabel() {
-        assertEquals("", e00.getLabel());
-        assertEquals("", e01.getLabel());
-        assertEquals("", e02.getLabel());
-        assertEquals("", e11.getLabel());
-        assertEquals("", e12.getLabel());
+        assertEquals(null, e00.getLabel());
+        assertEquals(null, e01.getLabel());
+        assertEquals(null, e02.getLabel());
+        assertEquals(null, e11.getLabel());
+        assertEquals(null, e12.getLabel());
     }
 
     @Test

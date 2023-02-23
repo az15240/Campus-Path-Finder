@@ -15,32 +15,32 @@ public class NodeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
-    private Node defaultNode = new Node("");
-    private Node n0 = new Node("0");
-    private Node n1 = new Node("1");
-    private Node nWeird = new Node("weird");
-    private Node defaultNodeWithValue = new Node("", -1);
-    private Node n0WithValue = new Node("0", 0);
-    private Node n1WithValue = new Node("1", 1);
-    private Node nWeirdWithValue = new Node("weird", 999);
+    private Node<String> defaultNode = new Node<>("");
+    private Node<String> n0 = new Node<>("0");
+    private Node<String> n1 = new Node<>("1");
+    private Node<String> nWeird = new Node<>("weird");
+    private Node<Integer> defaultNodeWithValue = new Node<>("", -1);
+    private Node<Integer> n0WithValue = new Node<>("0", 0);
+    private Node<Integer> n1WithValue = new Node<>("1", 1);
+    private Node<Integer> nWeirdWithValue = new Node<>("weird", 999);
 
 
     @Test
     public void testOneArgConstructor() {
-        new Node("");
-        new Node("0");
-        new Node("+1-1");
-        new Node("randomString");
-        new Node("\"string with quotation\"");
+        new Node<>("");
+        new Node<>("0");
+        new Node<>("+1-1");
+        new Node<>("randomString");
+        new Node<>("\"string with quotation\"");
     }
 
     @Test
     public void testTwoArgConstructor() {
-        new Node("", 1);
-        new Node("0", 0);
-        new Node("+1-1", -1);
-        new Node("randomString", 1226);
-        new Node("\"string with quotation\"", 2147483647);
+        new Node<>("", 1);
+        new Node<>("0", 0);
+        new Node<>("+1-1", -1);
+        new Node<>("randomString", 1226);
+        new Node<>("\"string with quotation\"", 2147483647);
     }
 
     @Test
@@ -61,18 +61,22 @@ public class NodeTest {
 
     @Test
     public void testGetValueNoValue() {
-        assertEquals(Integer.MIN_VALUE, defaultNode.getValue());
-        assertEquals(Integer.MIN_VALUE, n0.getValue());
-        assertEquals(Integer.MIN_VALUE, n1.getValue());
-        assertEquals(Integer.MIN_VALUE, nWeird.getValue());
+        assertEquals(null, defaultNode.getValue());
+        assertEquals(null, n0.getValue());
+        assertEquals(null, n1.getValue());
+        assertEquals(null, nWeird.getValue());
     }
 
     @Test
     public void testGetValueWithValue() {
-        assertEquals(-1, defaultNodeWithValue.getValue());
-        assertEquals(0, n0WithValue.getValue());
-        assertEquals(1, n1WithValue.getValue());
-        assertEquals(999, nWeirdWithValue.getValue());
+        Integer negone = -1;
+        Integer zero = 0;
+        Integer one = 1;
+        Integer nineninenine = 999;
+        assertEquals(negone, defaultNodeWithValue.getValue());
+        assertEquals(zero, n0WithValue.getValue());
+        assertEquals(one, n1WithValue.getValue());
+        assertEquals(nineninenine, nWeirdWithValue.getValue());
     }
 
     @Test
@@ -89,25 +93,29 @@ public class NodeTest {
 
     @Test
     public void testSetValue() {
-        defaultNode.setValue(-1);
-        assertEquals(-1, defaultNode.getValue());
-        n0.setValue(1);
-        assertEquals(1, n0.getValue());
-        n1.setValue(999);
-        assertEquals(999, n1.getValue());
-        nWeird.setValue(-999);
-        assertEquals(-999, nWeird.getValue());
+        defaultNode.setValue("test");
+        assertEquals("test", defaultNode.getValue());
+        n0.setValue("n0");
+        assertEquals("n0", n0.getValue());
+        n1.setValue("999");
+        assertEquals("999", n1.getValue());
+        nWeird.setValue("-999");
+        assertEquals("-999", nWeird.getValue());
     }
 
     @Test
     public void testSetValueWithValue() {
+        Integer negone = -1;
+        Integer one = 1;
+        Integer nineninenine = 999;
+        Integer negnineninenine = -999;
         defaultNodeWithValue.setValue(-1);
-        assertEquals(-1, defaultNodeWithValue.getValue());
+        assertEquals(negone, defaultNodeWithValue.getValue());
         n0WithValue.setValue(1);
-        assertEquals(1, n0WithValue.getValue());
+        assertEquals(one, n0WithValue.getValue());
         n1WithValue.setValue(999);
-        assertEquals(999, n1WithValue.getValue());
+        assertEquals(nineninenine, n1WithValue.getValue());
         nWeirdWithValue.setValue(-999);
-        assertEquals(-999, nWeirdWithValue.getValue());
+        assertEquals(negnineninenine, nWeirdWithValue.getValue());
     }
 }

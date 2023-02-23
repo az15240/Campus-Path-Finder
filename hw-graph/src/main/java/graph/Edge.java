@@ -7,7 +7,7 @@ package graph;
  * label. Two <b>Edge</b>s are considered equal if they have the same start node, end node,
  * and same label.
  */
-public class Edge {
+public class Edge<E1, E2> {
 
     // Abstraction Function:
     // Edge e, represents an edge in a graph. It connects two not necessarily different nodes.
@@ -20,17 +20,17 @@ public class Edge {
     /**
      * Start node of the edge
      */
-    private Node start;
+    private Node<E1> start;
 
     /**
      * End node of the edge
      */
-    private Node end;
+    private Node<E1> end;
 
     /**
      * Optional label of the edge, in String
      */
-    private String label;
+    private E2 label;
 
     /**
      * Constructs a new edge with default label.
@@ -39,10 +39,10 @@ public class Edge {
      * @spec.requires st != null &amp;&amp; ed != null
      * @spec.effects Constructs a new edge with start node, end node, and default label.
      */
-    public Edge(Node st, Node ed) {
+    public Edge(Node<E1> st, Node<E1> ed) {
         start = st;
         end = ed;
-        label = "";
+        label = null;
         checkRep();
     }
 
@@ -54,7 +54,7 @@ public class Edge {
      * @spec.requires st != null &amp;&amp; ed != null
      * @spec.effects Constructs a new edge with start node, end node, and label l.
      */
-    public Edge(Node st, Node ed, String l) {
+    public Edge(Node<E1> st, Node<E1> ed, E2 l) {
         start = st;
         end = ed;
         label = l;
@@ -73,7 +73,7 @@ public class Edge {
      *
      * @return the start node of the current edge.
      */
-    public Node getStart() {
+    public Node<E1> getStart() {
         return start;
     }
 
@@ -83,7 +83,7 @@ public class Edge {
      * @param st the given start node
      * @spec.modifies start
      */
-    public void setStart(Node st) {
+    public void setStart(Node<E1> st) {
         start = st;
         checkRep();
     }
@@ -93,7 +93,7 @@ public class Edge {
      *
      * @return the end node of the current edge.
      */
-    public Node getEnd() {
+    public Node<E1> getEnd() {
         return end;
     }
 
@@ -103,7 +103,7 @@ public class Edge {
      * @param ed the given end node
      * @spec.modifies end
      */
-    public void setEnd(Node ed) {
+    public void setEnd(Node<E1> ed) {
         end = ed;
         checkRep();
     }
@@ -113,7 +113,7 @@ public class Edge {
      *
      * @return the label of the current edge.
      */
-    public String getLabel() {
+    public E2 getLabel() {
         return label;
     }
 
@@ -123,7 +123,7 @@ public class Edge {
      * @param l the given label
      * @spec.modifies label
      */
-    public void setLabel(String l) {
+    public void setLabel(E2 l) {
         label = l;
         checkRep();
     }
@@ -140,10 +140,10 @@ public class Edge {
      */
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof Edge)) {
+        if (!(other instanceof Edge<?, ?>)) {
             return false;
         }
-        Edge e = (Edge) other;
+        Edge<?, ?> e = (Edge<?, ?>) other;
         return this.label.equals(e.label) && this.start.equals(e.start) && this.end.equals(e.end);
     }
 

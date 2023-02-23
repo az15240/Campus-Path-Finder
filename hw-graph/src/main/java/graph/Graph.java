@@ -8,7 +8,7 @@ import java.util.*;
  * the graph. Note that this graph can contain multiple edges with the same start and end nodes.
  * All Nodes must have different names.
  */
-public class Graph {
+public class Graph<E1, E2> {
 
     // Abstraction Function:
     // Graph g, represents a graph that contains a set of Nodes and a set of Edges connecting
@@ -30,14 +30,14 @@ public class Graph {
     /**
      * A set of nodes in the graph
      */
-    private Set<Node> nodes;
+    private Set<Node<E1>> nodes;
 
     /**
      * A map containing all edges in the graph
      * With the same start node as the key, it maps to a set of edges with same start
      * node as the key.
      */
-    private Map<Node, Set<Edge>> edges;
+    private Map<Node<E1>, Set<Edge<E1, E2>>> edges;
 
     /**
      * Constructs a new, empty graph.
@@ -57,13 +57,13 @@ public class Graph {
         assert (edges != null);
         if (DEBUG) {
             Set<String> names = new HashSet<>();
-            for (Node n : nodes) {
+            for (Node<E1> n : nodes) {
                 assert (!names.contains(n.getName()));
                 names.add(n.getName());
             }
-            for (Node n : edges.keySet()) {
-                Set<Edge> eset = edges.get(n);
-                for (Edge e : eset) {
+            for (Node<E1> n : edges.keySet()) {
+                Set<Edge<E1, E2>> eset = edges.get(n);
+                for (Edge<E1, E2> e : eset) {
                     assert (nodes.contains(e.getStart()));
                     assert (nodes.contains(e.getEnd()));
                 }
@@ -79,7 +79,7 @@ public class Graph {
      * @spec.modifies nodes
      * @spec.effects If the given node does not exist, then add a new node into the graph.
      */
-    public void addNode(Node node) {
+    public void addNode(Node<E1> node) {
         if (!nodes.contains(node)) {
             nodes.add(node);
         }
@@ -95,15 +95,15 @@ public class Graph {
      * @spec.modifies edges
      * @spec.effects If the given edge does not exist, then add the edge into the graph.
      */
-    public void addEdge(Edge edge) {
-        Node st = edge.getStart();
+    public void addEdge(Edge<E1, E2> edge) {
+        Node<E1> st = edge.getStart();
         if (nodes.contains(st) && nodes.contains(edge.getEnd())) {
             if (!edges.containsKey(st)) { // Key not found, so create a new Set
-                Set<Edge> theEdges = new HashSet<>();
+                Set<Edge<E1, E2>> theEdges = new HashSet<>();
                 edges.put(st, theEdges);
                 theEdges.add(edge);
             } else { // Key is found, then just add the edge to the Mapped Set
-                Set<Edge> theEdges = edges.get(st);
+                Set<Edge<E1, E2>> theEdges = edges.get(st);
                 theEdges.add(edge);
             }
         }
@@ -115,7 +115,7 @@ public class Graph {
      *
      * @return a set of all nodes in the graph.
      */
-    public Set<Node> getAllNodes() {
+    public Set<Node<E1>> getAllNodes() {
         return nodes;
     }
 
@@ -124,7 +124,7 @@ public class Graph {
      *
      * @return a map of all edges in the graph.
      */
-    public Map<Node, Set<Edge>> getAllEdges() {
+    public Map<Node<E1>, Set<Edge<E1, E2>>> getAllEdges() {
         return edges;
     }
 
@@ -135,8 +135,8 @@ public class Graph {
      * @param name the given name
      * @return the node of the given name, or null if the name is not found.
      */
-    public Node getNodeByName(String name) {
-        for (Node n : nodes) {
+    public Node<E1> getNodeByName(String name) {
+        for (Node<E1> n : nodes) {
             if (n.getName().equals(name)) {
                 return n;
             }
@@ -154,9 +154,9 @@ public class Graph {
      * @param end the end node in String (its name)
      * @return the edge of the given label, or null if the label is not found.
      */
-    public Edge getEdgeByLabel(String label, Node start, String end) {
-        Set<Edge> eset = edges.get(start);
-        for (Edge e : eset) {
+    public Edge<E1, E2> getEdgeByLabel(E2 label, Node<E1> start, String end) {
+        Set<Edge<E1, E2>> eset = edges.get(start);
+        for (Edge<E1, E2> e : eset) {
             if (e.getLabel().equals(label) && e.getEnd().getName().equals(end)) {
                 return e;
             }
@@ -176,20 +176,20 @@ public class Graph {
      * of labels of the edges towards the child node, or an empty map if the node is not found in the graph or if
      * the node has no children.
      */
-    public Map<String, List<String>> getChildrenFromNode(Node node) {
-        Map<String, List<String>> children = new TreeMap<>();
+    public Map<String, List<E2>> getChildrenFromNode(Node<E1> node) {
+        Map<String, List<E2>> children = new TreeMap<>();
         if (edges.get(node) == null) {
             return children;
         }
-        for (Edge e : edges.get(node)) {
+        for (Edge<E1, E2> e : edges.get(node)) {
             String childName = e.getEnd().getName();
-            String label = e.getLabel();
+            E2 label = e.getLabel();
             if (!children.containsKey(childName)) {
-                List<String> theEdges = new ArrayList<>();
+                List<E2> theEdges = new ArrayList<>();
                 theEdges.add(label);
                 children.put(childName, theEdges);
             } else {
-                List<String> theEdges = children.get(childName);
+                List<E2> theEdges = children.get(childName);
                 theEdges.add(label);
             }
         }
@@ -199,13 +199,13 @@ public class Graph {
     // Private helper method, to help testing and debugging
     private void outputTester() {
         System.out.print("\n||| CALLING outputTester |||\nAll nodes:");
-        for (Node n : nodes) {
+        for (Node<E1> n : nodes) {
             System.out.print(" " + n.getName());
         }
         System.out.print("\n");
-        for (Node n : edges.keySet()) {
+        for (Node<E1> n : edges.keySet()) {
             System.out.println("All children of node " + n.getName() + " are: ");
-            for (Edge e : edges.get(n)) {
+            for (Edge<E1, E2> e : edges.get(n)) {
                 System.out.println(" " + e.getEnd().getName() + " via " + e.getLabel());
             }
         }

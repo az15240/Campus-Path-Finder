@@ -29,7 +29,7 @@ public class MarvelTestDriver {
     // ***  JUnit Test Driver  ***
     // ***************************
 
-    private final Map<String, Graph> graphs = new HashMap<String, Graph>();
+    private final Map<String, Graph<Integer, String>> graphs = new HashMap<>();
     private final PrintWriter output;
     private final BufferedReader input;
 
@@ -120,7 +120,7 @@ public class MarvelTestDriver {
     }
 
     private void createGraph(String graphName) {
-        Graph g = new Graph();
+        Graph<Integer, String> g = new Graph<>();
         graphs.put(graphName, g);
         output.println("created graph " + graphName);
     }
@@ -137,8 +137,8 @@ public class MarvelTestDriver {
     }
 
     private void addNode(String graphName, String nodeName) {
-        Graph g = graphs.get(graphName);
-        g.addNode(new Node(nodeName));
+        Graph<Integer, String> g = graphs.get(graphName);
+        g.addNode(new Node<>(nodeName));
         output.println("added node " + nodeName + " to " + graphName);
     }
 
@@ -157,10 +157,10 @@ public class MarvelTestDriver {
 
     private void addEdge(String graphName, String parentName, String childName,
                          String edgeLabel) {
-        Graph g = graphs.get(graphName);
-        Node st = g.getNodeByName(parentName);
-        Node ed = g.getNodeByName(childName);
-        g.addEdge(new Edge(st, ed, edgeLabel));
+        Graph<Integer, String> g = graphs.get(graphName);
+        Node<Integer> st = g.getNodeByName(parentName);
+        Node<Integer> ed = g.getNodeByName(childName);
+        g.addEdge(new Edge<>(st, ed, edgeLabel));
         output.println("added edge " + edgeLabel + " from " + parentName + " to " + childName + " in " + graphName);
     }
 
@@ -174,10 +174,10 @@ public class MarvelTestDriver {
     }
 
     private void listNodes(String graphName) {
-        Graph g = graphs.get(graphName);
-        Set<Node> nodes = g.getAllNodes();
+        Graph<Integer, String> g = graphs.get(graphName);
+        Set<Node<Integer>> nodes = g.getAllNodes();
         Set<String> names = new TreeSet<>();
-        for (Node n : nodes) {
+        for (Node<Integer> n : nodes) {
             names.add(n.getName());
         }
         output.print(graphName + " contains:");
@@ -198,7 +198,7 @@ public class MarvelTestDriver {
     }
 
     private void listChildren(String graphName, String parentName) {
-        Graph g = graphs.get(graphName);
+        Graph<Integer, String> g = graphs.get(graphName);
         Map<String, List<String>> pairs = g.getChildrenFromNode(g.getNodeByName(parentName));
 
         for (String nodeName : pairs.keySet()) {
@@ -225,7 +225,7 @@ public class MarvelTestDriver {
     }
 
     private void loadGraph(String graphName, String fileName) {
-        Graph g = MarvelPaths.loadGraph(fileName);
+        Graph<Integer, String> g = MarvelPaths.loadGraph(fileName);
         graphs.put(graphName, g);
         output.println("loaded graph " + graphName);
     }
@@ -242,9 +242,9 @@ public class MarvelTestDriver {
     }
 
     private void findPath(String graphName, String nodeName1, String nodeName2) {
-        Graph g = graphs.get(graphName);
-        Node n1 = g.getNodeByName(nodeName1);
-        Node n2 = g.getNodeByName(nodeName2);
+        Graph<Integer, String> g = graphs.get(graphName);
+        Node<Integer> n1 = g.getNodeByName(nodeName1);
+        Node<Integer> n2 = g.getNodeByName(nodeName2);
         if (n1 == null || n2 == null) {
             if (n1 == null) {
                 output.println("unknown: " + nodeName1);
@@ -254,11 +254,11 @@ public class MarvelTestDriver {
             }
         } else {
             output.println("path from " + nodeName1 + " to " + nodeName2 + ":");
-            List<Edge> path = MarvelPaths.BFS(g, g.getNodeByName(nodeName1), g.getNodeByName(nodeName2));
+            List<Edge<Integer, String>> path = MarvelPaths.BFS(g, g.getNodeByName(nodeName1), g.getNodeByName(nodeName2));
             if (path == null) {
                 output.println("no path found");
             } else {
-                for (Edge e : path) {
+                for (Edge<Integer, String> e : path) {
                     output.println(e.getStart().getName() + " to " + e.getEnd().getName() + " via " + e.getLabel());
                 }
             }

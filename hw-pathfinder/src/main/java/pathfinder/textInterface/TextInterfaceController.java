@@ -13,6 +13,7 @@ package pathfinder.textInterface;
 
 import pathfinder.ModelAPI;
 import pathfinder.datastructures.Path;
+import pathfinder.datastructures.Point;
 
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class TextInterfaceController implements InputHandler {
     /**
      * The data-carrier and processor for the application.
      */
-    private ModelAPI model;
+    private ModelAPI<Point> model;
 
     /**
      * The user-facing view and input receiver for this application.
@@ -43,7 +44,7 @@ public class TextInterfaceController implements InputHandler {
      * @param model A model to use for computation and data.
      * @param view  A view to use to display data to the user.
      */
-    public TextInterfaceController(ModelAPI model, TextInterfaceView view) {
+    public TextInterfaceController(ModelAPI<Point> model, TextInterfaceView view) {
         this.model = model;
         this.view = view;
     }
@@ -128,7 +129,7 @@ public class TextInterfaceController implements InputHandler {
             view.basePrompt();
             return;
         }
-        Path path = model.findShortestPath(start, end);
+        Path<Point> path = model.findShortestPath(start, end);
         if(path == null) {
             // No path. This is guaranteed not to happen by the homework spec,
             // so let's fall on our face if it does.

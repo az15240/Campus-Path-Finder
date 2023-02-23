@@ -18,32 +18,32 @@ public class GraphTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
-    private Node n0 = new Node("n0", 0);
-    private Node n1 = new Node("n1");
-    private Node n2 = new Node("n2");
-    private Edge e00 = new Edge(n0, n0);
-    private Edge e01 = new Edge(n0, n1);
-    private Edge e02 = new Edge(n0, n2);
-    private Edge e11 = new Edge(n1, n1);
-    private Edge e12 = new Edge(n1, n2);
-    private Edge e00Label = new Edge(n0, n0, "e00");
-    private Edge e01Label = new Edge(n0, n1, "e01");
-    private Edge e02Label = new Edge(n0, n2, "e02");
-    private Edge e11Label = new Edge(n1, n1, "e11");
-    private Edge e12Label = new Edge(n1, n2, "e12");
+    private Node<Integer> n0 = new Node<>("n0", 0);
+    private Node<Integer> n1 = new Node<>("n1");
+    private Node<Integer> n2 = new Node<>("n2");
+    private Edge<Integer, String> e00 = new Edge<>(n0, n0);
+    private Edge<Integer, String> e01 = new Edge<>(n0, n1);
+    private Edge<Integer, String> e02 = new Edge<>(n0, n2);
+    private Edge<Integer, String> e11 = new Edge<>(n1, n1);
+    private Edge<Integer, String> e12 = new Edge<>(n1, n2);
+    private Edge<Integer, String> e00Label = new Edge<>(n0, n0, "e00");
+    private Edge<Integer, String> e01Label = new Edge<>(n0, n1, "e01");
+    private Edge<Integer, String> e02Label = new Edge<>(n0, n2, "e02");
+    private Edge<Integer, String> e11Label = new Edge<>(n1, n1, "e11");
+    private Edge<Integer, String> e12Label = new Edge<>(n1, n2, "e12");
 
-    private Graph emtpyGraph = new Graph();
+    private Graph<Integer, String> emtpyGraph = new Graph<>();
 
-    private Graph makeFullGraphNodes() {
-        Graph graph = new Graph();
+    private Graph<Integer, String> makeFullGraphNodes() {
+        Graph<Integer, String> graph = new Graph<>();
         graph.addNode(n0);
         graph.addNode(n1);
         graph.addNode(n2);
         return graph;
     }
 
-    private Graph makeFullGraph() {
-        Graph graph = new Graph();
+    private Graph<Integer, String> makeFullGraph() {
+        Graph<Integer, String> graph = new Graph<>();
         graph.addNode(n0);
         graph.addNode(n1);
         graph.addNode(n2);
@@ -57,13 +57,13 @@ public class GraphTest {
 
     @Test
     public void testConstructor() {
-        new Graph();  // to test the constructor
+        new Graph<>();  // to test the constructor
     }
 
     @Test
     public void testAddNode() {
-        Graph graph = new Graph();
-        Graph graph2 = new Graph();
+        Graph<Integer, String> graph = new Graph<>();
+        Graph<Integer, String> graph2 = new Graph<>();
         graph.addNode(n0);
         graph2.addNode(n0);
         assertEquals(graph.getNodeByName("n0"), graph2.getNodeByName("n0"));
@@ -76,8 +76,8 @@ public class GraphTest {
 
     @Test
     public void testAddEdge() {
-        Graph graph = makeFullGraphNodes();
-        Graph graph2 = makeFullGraphNodes();
+        Graph<Integer, String> graph = makeFullGraphNodes();
+        Graph<Integer, String> graph2 = makeFullGraphNodes();
         graph.addEdge(e00Label);
         graph2.addEdge(e00Label);
         assertEquals(graph.getEdgeByLabel("e00", n0, "n0"), graph2.getEdgeByLabel("e00", n0, "n0"));
@@ -90,36 +90,34 @@ public class GraphTest {
 
     @Test
     public void testGetAllNodes() {
-        Graph graph = makeFullGraph();
-        Set<Node> st = new HashSet<Node>();
+        Graph<Integer, String> graph = makeFullGraph();
+        Set<Node<Integer>> st = new HashSet<>();
         st.add(n0);
         st.add(n1);
         st.add(n2);
         assertEquals(st, graph.getAllNodes());
 
-        assertEquals(new HashSet<Node>(), emtpyGraph.getAllNodes());
+        assertEquals(new HashSet<Node<Integer>>(), emtpyGraph.getAllNodes());
     }
 
     @Test
     public void testGetAllEdges() {
-        Graph graph = makeFullGraph();
-        Map<Node, Set<Edge>> mp = new HashMap<Node, Set<Edge>>();
-        Set<Edge> st0 = new HashSet<Edge>();
+        Map<Node<Integer>, Set<Edge<Integer, String>>> mp = new HashMap<>();
+        Set<Edge<Integer, String>> st0 = new HashSet<>();
         st0.add(e00Label);
         st0.add(e01Label);
         st0.add(e02Label);
         mp.put(n0, st0);
-        Set<Edge> st1 = new HashSet<Edge>();
+        Set<Edge<Integer, String>> st1 = new HashSet<>();
         st0.add(e11Label);
         st0.add(e12Label);
         mp.put(n1, st1);
-
         assertEquals(new HashMap<>(), emtpyGraph.getAllEdges());
     }
 
     @Test
     public void testGetNodeByName() {
-        Graph graph = makeFullGraph();
+        Graph<Integer, String> graph = makeFullGraph();
         assertEquals(null, graph.getNodeByName("does not exist!"));
         assertEquals(n0, graph.getNodeByName("n0"));
         assertEquals(n1, graph.getNodeByName("n1"));
@@ -130,7 +128,7 @@ public class GraphTest {
 
     @Test
     public void testGetEdgeByLabel() {
-        Graph graph = makeFullGraph();
+        Graph<Integer, String> graph = makeFullGraph();
         // assertEquals(null, graph.getEdgeByLabel("does not exist!", new Node("NA"), "NA"));
         assertEquals(e00Label, graph.getEdgeByLabel("e00", n0, "n0"));
         assertEquals(e01Label, graph.getEdgeByLabel("e01", n0, "n1"));
@@ -143,7 +141,7 @@ public class GraphTest {
 
     @Test
     public void testGetChildrenFromNode() {
-        Graph graph = makeFullGraph();
+        Graph<Integer, String> graph = makeFullGraph();
         Map<String, List<String>> st = new HashMap<>();
         List<String> l1 = new ArrayList<>();
         List<String> l2 = new ArrayList<>();
