@@ -1,0 +1,60 @@
+# Test a graph with cycles.
+# Graph ('A') has three nodes being in a cycle
+# Graph ('B') has three nodes being in a cycle and another node connecting to the cycle.
+# Graph ('C') has two cycles of three nodes with a shared arc of two nodes.
+
+CreateGraph A
+AddNode A n1
+AddNode A n2
+AddNode A n3
+# forms a cycle of (n1,n2,n3)
+AddEdge A n1 n2 1.2
+AddEdge A n2 n3 2.3
+AddEdge A n3 n1 3.1
+ListNodes A
+ListChildren A n1
+ListChildren A n2
+ListChildren A n3
+FindPath A n1 n3
+FindPath A n3 n1
+
+CreateGraph B
+AddNode B n1
+AddNode B n2
+AddNode B n3
+AddNode B n4
+# forms a cycle of (n1,n2,n3)
+AddEdge B n1 n2 1.2
+AddEdge B n2 n3 2.3
+AddEdge B n3 n1 3.1
+# connect n4 to the cycle
+AddEdge B n1 n4 1.4
+AddEdge B n4 n1 4.1
+ListNodes B
+ListChildren B n1
+ListChildren B n2
+ListChildren B n3
+ListChildren B n4
+FindPath B n2 n4
+FindPath B n4 n2
+
+CreateGraph C
+AddNode C n1
+AddNode C n2
+AddNode C n3
+AddNode C n4
+# forms a cycle of (n1,n2,n3)
+AddEdge C n1 n2 1.2
+AddEdge C n2 n3 2.3
+AddEdge C n3 n1 3.1
+# forms a cycle of (n1,n2,n4)
+AddEdge C n1 n4 1.4
+AddEdge C n4 n2 4.2
+AddEdge C n2 n1 2.1
+ListNodes C
+ListChildren C n1
+ListChildren C n2
+ListChildren C n3
+ListChildren C n4
+FindPath C n3 n4
+FindPath C n4 n3

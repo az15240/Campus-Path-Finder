@@ -1,0 +1,18 @@
+# Tests the Dijkstra function on two disconnected nodes in a graph
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+AddNode g C
+
+AddEdge g A B 1
+AddEdge g B A 2
+AddEdge g A A 3
+
+ListNodes g
+
+ListChildren g A
+
+FindPath g A C
+FindPath g C A

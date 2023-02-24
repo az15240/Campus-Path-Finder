@@ -29,8 +29,8 @@ public class MarvelPaths {
      * @spec.effects Constructs a new graph with information read from a .csv file.
      * @return the graph created from the .csv file
      */
-    public static Graph<Integer, String> loadGraph(String fileName) {
-        Graph<Integer, String> graph = new Graph<>();
+    public static Graph<String, String> loadGraph(String fileName) {
+        Graph<String, String> graph = new Graph<>();
         Map<String, Set<String>> data = parseData(fileName);
         for (String bookName : data.keySet()) {
             Set<String> set = data.get(bookName);
@@ -66,13 +66,13 @@ public class MarvelPaths {
      * @return a lexicographically least path from the two given nodes, or an empty list if the two
      *         given nodes are the same one, or null if such a path is not found.
      */
-    public static List<Edge<Integer, String>> BFS(Graph<Integer, String> g, Node<Integer> st, Node<Integer> ed) {
-        Queue<Node<Integer>> q = new LinkedList<>();
-        Map<Node<Integer>, List<Edge<Integer, String>>> m = new HashMap<>();
+    public static List<Edge<String, String>> BFS(Graph<String, String> g, Node<String> st, Node<String> ed) {
+        Queue<Node<String>> q = new LinkedList<>();
+        Map<Node<String>, List<Edge<String, String>>> m = new HashMap<>();
         q.add(st);
         m.put(st, new ArrayList<>());
         while (!q.isEmpty()) {
-            Node<Integer> n = q.remove();
+            Node<String> n = q.remove();
             if (n.equals(ed)) { // destination found
                 return m.get(n);
             }
@@ -83,10 +83,10 @@ public class MarvelPaths {
                 List<String> edges = nextOnes.get(son); // edges is the List of edges that connects n to son
                 Collections.sort(edges); // sort the edges on a same child to give a lexicographically least path
                 for (String edgeName : edges) { // n -[edgeName]-> son
-                    Node<Integer> target = new Node<>(son);
+                    Node<String> target = new Node<>(son);
                     if (!m.containsKey(target)) { // m is not visited yet, so add it and the path in the map
-                        List<Edge<Integer, String>> temp = new ArrayList<>(m.get(n));
-                        Edge<Integer, String> newEdge = new Edge<>(n, target, edgeName);
+                        List<Edge<String, String>> temp = new ArrayList<>(m.get(n));
+                        Edge<String, String> newEdge = new Edge<>(n, target, edgeName);
                         temp.add(newEdge);
                         m.put(target, temp);
                         q.add(target);
@@ -107,7 +107,7 @@ public class MarvelPaths {
      * @param args arguments from command line
      */
     public static void main(String[] args) {
-        Graph<Integer, String> g = MarvelPaths.loadGraph("marvel.csv");
+        Graph<String, String> g = MarvelPaths.loadGraph("marvel.csv");
         Scanner scan = new Scanner(System.in);
         while (true) {
             System.out.println("Welcome to the MarvelPaths program :)\n" +
@@ -117,27 +117,27 @@ public class MarvelPaths {
                     "Please input the first character's name:  ");
             String name1 = scan.nextLine();
             if (name1.equals("QUIT")) break;
-            if (g.getNodeByName(name1) == null) {
+            if (g.containsNode(new Node<>(name1))) {
                 System.out.println("This character is not found. Please start over.");
                 continue;
             }
             System.out.println("Please input the second character's name: ");
             String name2 = scan.nextLine();
             if (name2.equals("QUIT")) break;
-            if (g.getNodeByName(name2) == null) {
+            if (g.containsNode(new Node<>(name2))) {
                 System.out.println("This character is not found. Please start over.");
                 continue;
             }
 
-            List<Edge<Integer, String>> lst = BFS(g, g.getNodeByName(name1), g.getNodeByName(name2));
+            List<Edge<String, String>> lst = BFS(g, new Node<>(name1), new Node<>(name2));
             if (lst == null) {
                 System.out.println("No path found!");
             } else if (lst.size() == 0) {
                 System.out.println("Cannot point oneself to oneself!");
             } else {
                 System.out.println("Path found from these two nodes:");
-                for (Edge<Integer, String> e : lst) {
-                    System.out.println("From " + e.getStart().getName() + " to " + e.getEnd().getName() + " via " + e.getLabel());
+                for (Edge<String, String> e : lst) {
+                    System.out.println("From " + e.getStart().getValue() + " to " + e.getEnd().getValue() + " via " + e.getLabel());
                 }
             }
             System.out.println("Ends successfully. We'll start another round.\n\n");

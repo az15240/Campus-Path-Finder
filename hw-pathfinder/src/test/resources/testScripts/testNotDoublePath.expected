@@ -1,0 +1,20 @@
+# Tests the special case in which the input string for edge label is not a double
+
+created graph g
+
+added node A to g
+added node B to g
+added node C to g
+
+added edge 1.235 from A to B in g
+added edge 2.232 from B to A in g
+Provided label is not a double!
+
+g contains: A B C
+
+the children of A in g are: B(1.235)
+
+path from A to C:
+no path found
+path from C to A:
+no path found

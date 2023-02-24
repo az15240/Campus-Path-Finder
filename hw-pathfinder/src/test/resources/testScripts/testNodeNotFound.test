@@ -1,0 +1,32 @@
+# Tests the special case for the Dijkstra function in which one or two given nodes are not found
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+AddNode g C
+
+AddEdge g A B 1
+AddEdge g B A 2
+AddEdge g A C 3
+
+ListNodes g
+
+ListChildren g A
+
+# One node not found
+
+FindPath g A D
+
+FindPath g A weird
+
+FindPath g weird B
+
+
+# Two nodes not found
+
+FindPath g D E
+
+FindPath g Stan Ley
+
+FindPath g "" ""

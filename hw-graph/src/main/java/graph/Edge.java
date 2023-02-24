@@ -158,4 +158,8 @@ public class Edge<E1, E2> {
     public int hashCode() {
         return this.label.hashCode() * 31 * 31 + this.start.hashCode() * 31 + this.end.hashCode();
     }
+
+    public String toString() {
+        return " Edge: from (" + start + ") to (" + end + ") with length " + label;
+    }
 }

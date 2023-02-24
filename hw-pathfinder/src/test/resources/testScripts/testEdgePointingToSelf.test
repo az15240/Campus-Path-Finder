@@ -1,0 +1,33 @@
+# Test a special edge that connects from and to the same node.
+# Graph A consists of three nodes, each having such a special edge.
+# Graph B consists of three nodes, two of them have a special edge, and one edge connecting
+# these two nodes, and one edge connecting one of these nodes and the other node.
+
+CreateGraph A
+AddNode A n1
+AddEdge A n1 n1 1
+ListChildren A n1
+AddNode A n2
+AddEdge A n2 n2 2
+ListChildren A n2
+AddNode A n3
+AddEdge A n3 n3 3
+ListChildren A n3
+ListNodes A
+
+CreateGraph B
+AddNode B n1
+AddEdge B n1 n1 10
+ListChildren B n1
+AddNode B n2
+AddEdge B n2 n2 20
+ListChildren B n2
+AddEdge B n1 n2 12
+ListChildren B n1
+AddNode B n3
+AddEdge B n1 n3 13
+ListChildren B n1
+ListNodes B
+
+FindPath A n1 n1
+FindPath B n1 n3

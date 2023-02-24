@@ -1,0 +1,19 @@
+# Test the numerically sorted output
+
+CreateGraph A
+AddNode A n1
+AddNode A n2
+AddNode A n3
+AddEdge A n1 n3 999
+AddEdge A n1 n1 10
+AddEdge A n1 n2 9.2
+AddEdge A n1 n2 3.2
+AddEdge A n1 n1 1
+AddEdge A n1 n3 123
+AddEdge A n1 n2 0.1
+AddEdge A n1 n2 1.2
+AddEdge A n1 n3 3.1415926
+
+ListChildren A n1
+ListChildren A n2
+ListChildren A n3

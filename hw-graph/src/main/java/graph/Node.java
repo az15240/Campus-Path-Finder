@@ -15,61 +15,17 @@ public class Node<E> {
     // this != null
 
     /**
-     * Name of the node
-     */
-    private String name;
-
-    /**
      * Value of the node, in integer
      */
     private E value;
 
-    /**
-     * Constructs a new Node with default value 0.
-     *
-     * @param n name of the node
-     * @spec.effects Constructs a new Node with given name n and default value 0.
-     */
-    public Node(String n) {
-        name = n;
-        value = null;
-    }
-
-    /**
-     * Constructs a new Node with given value v.
-     *
-     * @param n name of the node
-     * @param v value of the node
-     * @spec.effects Constructs a new Node with given name n and given value v.
-     */
-    public Node(String n, E v) {
-        name = n;
+    public Node(E v) {
         value = v;
     }
 
     // Throws an exception if the representation invariant is violated.
     private void checkRep() {
         assert (this != null);
-    }
-
-    /**
-     * Returns the name of the current node.
-     *
-     * @return the name of the current node.
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Changes the name of the current node to the given name n.
-     *
-     * @param n the given name
-     * @spec.modifies name
-     */
-    public void setName(String n) {
-        name = n;
-        checkRep();
     }
 
     /**
@@ -106,7 +62,7 @@ public class Node<E> {
             return false;
         }
         Node<?> n = (Node<?>) other;
-        return this.name.equals(n.name);
+        return this.value.equals(n.value);
     }
 
     /**
@@ -117,6 +73,10 @@ public class Node<E> {
      */
     @Override
     public int hashCode() {
-        return this.name.hashCode();
+        return this.value.hashCode();
+    }
+
+    public String toString() {
+        return " Node value: " + value + " ";
     }
 }

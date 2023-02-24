@@ -16,19 +16,19 @@ public class EdgeTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 seconds max per method tested
 
-    private Node<Integer> n0 = new Node<>("n0", 0);
-    private Node<Integer> n1 = new Node<>("n1");
-    private Node<Integer> n2 = new Node<>("n2");
-    private Edge<Integer, String> e00 = new Edge<>(n0, n0);
-    private Edge<Integer, String> e01 = new Edge<>(n0, n1);
-    private Edge<Integer, String> e02 = new Edge<>(n0, n2);
-    private Edge<Integer, String> e11 = new Edge<>(n1, n1);
-    private Edge<Integer, String> e12 = new Edge<>(n1, n2);
-    private Edge<Integer, String> e00Label = new Edge<>(n0, n0, "e00");
-    private Edge<Integer, String> e01Label = new Edge<>(n0, n1, "e01");
-    private Edge<Integer, String> e02Label = new Edge<>(n0, n2, "e02");
-    private Edge<Integer, String> e11Label = new Edge<>(n1, n1, "e11");
-    private Edge<Integer, String> e12Label = new Edge<>(n1, n2, "e12");
+    private Node<String> n0 = new Node<>("n0");
+    private Node<String> n1 = new Node<>("n1");
+    private Node<String> n2 = new Node<>("n2");
+    private Edge<String, String> e00 = new Edge<>(n0, n0);
+    private Edge<String, String> e01 = new Edge<>(n0, n1);
+    private Edge<String, String> e02 = new Edge<>(n0, n2);
+    private Edge<String, String> e11 = new Edge<>(n1, n1);
+    private Edge<String, String> e12 = new Edge<>(n1, n2);
+    private Edge<String, String> e00Label = new Edge<>(n0, n0, "e00");
+    private Edge<String, String> e01Label = new Edge<>(n0, n1, "e01");
+    private Edge<String, String> e02Label = new Edge<>(n0, n2, "e02");
+    private Edge<String, String> e11Label = new Edge<>(n1, n1, "e11");
+    private Edge<String, String> e12Label = new Edge<>(n1, n2, "e12");
 
     @Test
     public void testConstructorNoLabel() {

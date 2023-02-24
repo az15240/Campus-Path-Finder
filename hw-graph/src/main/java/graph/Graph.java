@@ -8,7 +8,7 @@ import java.util.*;
  * the graph. Note that this graph can contain multiple edges with the same start and end nodes.
  * All Nodes must have different names.
  */
-public class Graph<E1, E2> {
+public class Graph<E1 extends Comparable<E1>, E2> {
 
     // Abstraction Function:
     // Graph g, represents a graph that contains a set of Nodes and a set of Edges connecting
@@ -56,10 +56,10 @@ public class Graph<E1, E2> {
         assert (nodes != null);
         assert (edges != null);
         if (DEBUG) {
-            Set<String> names = new HashSet<>();
+            Set<E1> names = new HashSet<>();
             for (Node<E1> n : nodes) {
-                assert (!names.contains(n.getName()));
-                names.add(n.getName());
+                assert (!names.contains(n.getValue()));
+                names.add(n.getValue());
             }
             for (Node<E1> n : edges.keySet()) {
                 Set<Edge<E1, E2>> eset = edges.get(n);
@@ -128,40 +128,17 @@ public class Graph<E1, E2> {
         return edges;
     }
 
-    /**
-     * Returns a node of the given name, or null if the name is not found.
-     *
-     * @spec.requires name != null
-     * @param name the given name
-     * @return the node of the given name, or null if the name is not found.
-     */
-    public Node<E1> getNodeByName(String name) {
+    public Node<E1> getNodeByGenerics(E1 e) {
         for (Node<E1> n : nodes) {
-            if (n.getName().equals(name)) {
+            if (n.getValue().equals(e)) {
                 return n;
             }
         }
         return null;
     }
 
-    /**
-     * Returns an edge of the given label and having the corresponding given start and end node.
-     * or null if the label is not found.
-     *
-     * @spec.requires label != null
-     * @param label the given label
-     * @param start the start node in Node
-     * @param end the end node in String (its name)
-     * @return the edge of the given label, or null if the label is not found.
-     */
-    public Edge<E1, E2> getEdgeByLabel(E2 label, Node<E1> start, String end) {
-        Set<Edge<E1, E2>> eset = edges.get(start);
-        for (Edge<E1, E2> e : eset) {
-            if (e.getLabel().equals(label) && e.getEnd().getName().equals(end)) {
-                return e;
-            }
-        }
-        return null;
+    public boolean containsNode(Node<E1> node) {
+        return nodes.contains(node);
     }
 
     /**
@@ -176,13 +153,13 @@ public class Graph<E1, E2> {
      * of labels of the edges towards the child node, or an empty map if the node is not found in the graph or if
      * the node has no children.
      */
-    public Map<String, List<E2>> getChildrenFromNode(Node<E1> node) {
-        Map<String, List<E2>> children = new TreeMap<>();
+    public Map<E1, List<E2>> getChildrenFromNode(Node<E1> node) {
+        Map<E1, List<E2>> children = new TreeMap<>();
         if (edges.get(node) == null) {
             return children;
         }
         for (Edge<E1, E2> e : edges.get(node)) {
-            String childName = e.getEnd().getName();
+            E1 childName = e.getEnd().getValue();
             E2 label = e.getLabel();
             if (!children.containsKey(childName)) {
                 List<E2> theEdges = new ArrayList<>();
@@ -196,18 +173,65 @@ public class Graph<E1, E2> {
         return children;
     }
 
+    public Map<E1, List<E2>> getChildrenFromNodeReturnValue(Node<E1> node) {
+        Map<E1, List<E2>> children = new HashMap<>();
+        if (edges.get(node) == null) {
+            return children;
+        }
+        for (Edge<E1, E2> e : edges.get(node)) {
+            E1 childValue = e.getEnd().getValue();
+            E2 label = e.getLabel();
+            if (!children.containsKey(childValue)) {
+                List<E2> theEdges = new ArrayList<>();
+                theEdges.add(label);
+                children.put(childValue, theEdges);
+            } else {
+                List<E2> theEdges = children.get(childValue);
+                theEdges.add(label);
+            }
+        }
+        return children;
+    }
+
+    public Set<Edge<E1, E2>> getChildrenFromNodeReturnValueSet(Node<E1> node) { // TBD here
+        System.out.println("The given node is: " + node);
+        if (nodes.contains(node)) {
+            System.out.println("The node is found. ");
+        }
+        if (edges.get(node) == null) {
+            System.out.println("The node is not found. ");
+            return new HashSet<>();
+        }
+        return edges.get(node);
+    }
+
     // Private helper method, to help testing and debugging
     private void outputTester() {
         System.out.print("\n||| CALLING outputTester |||\nAll nodes:");
         for (Node<E1> n : nodes) {
-            System.out.print(" " + n.getName());
+            System.out.print(" " + n.getValue());
         }
         System.out.print("\n");
         for (Node<E1> n : edges.keySet()) {
-            System.out.println("All children of node " + n.getName() + " are: ");
+            System.out.println("All children of node " + n.getValue() + " are: ");
             for (Edge<E1, E2> e : edges.get(n)) {
-                System.out.println(" " + e.getEnd().getName() + " via " + e.getLabel());
+                System.out.println(" " + e.getEnd().getValue() + " via " + e.getLabel());
             }
         }
+    }
+
+    public String toString() {
+        String text = "    Graph contains:\n";
+        for (Node<E1> nd : nodes) {
+            text += "   " + nd.toString() + "\n";
+        }
+        for (Node<E1> nd : edges.keySet()) {
+            Set<Edge<E1, E2>> eds = edges.get(nd);
+            for (Edge<E1, E2> ed : eds) {
+                text += "   " + ed.toString() + "\n";
+            }
+        }
+        text += "\n";
+        return text;
     }
 }

@@ -1,0 +1,35 @@
+# Tests the special case for the Dijkstra function in which one or two given nodes are not found
+
+created graph g
+
+added node A to g
+added node B to g
+added node C to g
+
+added edge 1.000 from A to B in g
+added edge 2.000 from B to A in g
+added edge 3.000 from A to C in g
+
+g contains: A B C
+
+the children of A in g are: B(1.000) C(3.000)
+
+# One node not found
+
+unknown: D
+
+unknown: weird
+
+unknown: weird
+
+
+# Two nodes not found
+
+unknown: D
+unknown: E
+
+unknown: Stan
+unknown: Ley
+
+unknown: ""
+unknown: ""

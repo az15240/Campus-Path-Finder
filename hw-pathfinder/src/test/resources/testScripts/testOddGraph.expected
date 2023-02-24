@@ -1,0 +1,47 @@
+# Test an odd graph in which there's a center node connecting to every other nodes.
+# Every "other nodes" connect to two other "other nodes".
+# The shape of graph is like a symmetrical polygon.
+
+created graph A
+added node n0 to A
+added node n1 to A
+added node n2 to A
+added node n3 to A
+added node n4 to A
+added node n5 to A
+added edge 0.100 from n0 to n1 in A
+added edge 0.200 from n0 to n2 in A
+added edge 0.300 from n0 to n3 in A
+added edge 0.400 from n0 to n4 in A
+added edge 0.500 from n0 to n5 in A
+added edge 1.200 from n1 to n2 in A
+added edge 1.500 from n1 to n5 in A
+added edge 2.100 from n2 to n1 in A
+added edge 2.300 from n2 to n3 in A
+added edge 3.200 from n3 to n2 in A
+added edge 3.400 from n3 to n4 in A
+added edge 4.300 from n4 to n3 in A
+added edge 4.500 from n4 to n5 in A
+added edge 5.100 from n5 to n1 in A
+added edge 5.400 from n5 to n4 in A
+A contains: n0 n1 n2 n3 n4 n5
+the children of n0 in A are: n1(0.100) n2(0.200) n3(0.300) n4(0.400) n5(0.500)
+the children of n1 in A are: n2(1.200) n5(1.500)
+the children of n2 in A are: n1(2.100) n3(2.300)
+the children of n3 in A are: n2(3.200) n4(3.400)
+the children of n4 in A are: n3(4.300) n5(4.500)
+the children of n5 in A are: n1(5.100) n4(5.400)
+
+path from n1 to n3:
+n1 to n2 with weight 1.200
+n2 to n3 with weight 2.300
+total cost: 3.500
+path from n2 to n5:
+n2 to n1 with weight 2.100
+n1 to n5 with weight 1.500
+total cost: 3.600
+path from n3 to n5:
+n3 to n2 with weight 3.200
+n2 to n1 with weight 2.100
+n1 to n5 with weight 1.500
+total cost: 6.800

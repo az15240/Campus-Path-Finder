@@ -1,0 +1,26 @@
+# Tests the Dijkstra algorithm on a simple graph with five node
+
+CreateGraph g
+
+AddNode g A
+AddNode g B
+AddNode g C
+AddNode g D
+AddNode g E
+
+AddEdge g A B 1
+AddEdge g A C 2
+AddEdge g A D 2
+AddEdge g B D 1
+AddEdge g C D 3
+AddEdge g B C 10
+AddEdge g D E 2
+
+ListNodes g
+
+ListChildren g A
+
+FindPath g A B
+FindPath g A C
+FindPath g A D
+FindPath g A E
