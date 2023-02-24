@@ -14,7 +14,7 @@ package pathfinder.datastructures;
 /**
  * Represents an immutable cartesian coordinate point.
  */
-public class Point {
+public class Point implements Comparable<Point> {
 
     // AF(this) =
     //      the x coordinate -> x
@@ -88,5 +88,14 @@ public class Point {
     @Override
     public int hashCode() {
         return (31 * Double.hashCode(x)) + Double.hashCode(y);
+    }
+
+    @Override
+    public int compareTo(Point o) {
+        int i = Double.compare(this.getX(), o.getY());
+        if (i != 0) {
+            return i;
+        }
+        return Double.compare(this.getY(), o.getY());
     }
 }

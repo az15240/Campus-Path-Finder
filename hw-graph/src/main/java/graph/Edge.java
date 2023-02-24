@@ -4,8 +4,11 @@ package graph;
  * <b>Edge</b> represents a <b>mutable</b> edge in a graph. It connects two <b>Node</b>s from
  * start to end, and directionally pointing from start to end (start and end could
  * possibly be the same nodes). It contains the start node, the end node, and an optional
- * label. Two <b>Edge</b>s are considered equal if they have the same start node, end node,
- * and same label.
+ * label. It uses generic types on the type of Node and the type of connecting label.
+ * Two <b>Edge</b>s are considered equal if they have the same start node, end node, and same label.
+ *
+ * @param <E1> Generic type for Nodes.
+ * @param <E2> Generic type for label.
  */
 public class Edge<E1, E2> {
 
@@ -28,16 +31,16 @@ public class Edge<E1, E2> {
     private Node<E1> end;
 
     /**
-     * Optional label of the edge, in String
+     * Label of the edge, in generics
      */
     private E2 label;
 
     /**
-     * Constructs a new edge with default label.
+     * Constructs a new edge with default empty label.
      * @param st start node of the edge
      * @param ed end node of the edge
      * @spec.requires st != null &amp;&amp; ed != null
-     * @spec.effects Constructs a new edge with start node, end node, and default label.
+     * @spec.effects Constructs a new edge with start node, end node, and default empty label.
      */
     public Edge(Node<E1> st, Node<E1> ed) {
         start = st;
@@ -130,12 +133,12 @@ public class Edge<E1, E2> {
 
     /**
      * Indicates whether the given Object is equal to this.
-     * The given Object is equal to this if it is an instance of Edge, and its start node equals
+     * The given Object is equal to this if it is an instance of Edge generics, and its start node equals
      * to the start node of this, its end node equals to the end node of this, and its label equals
      * to the label of this.
      *
      * @param other the given Object
-     * @return true if Object is an instance of Node, and its start node equals to the start node of
+     * @return true if Object is an instance of Edge generics, and its start node equals to the start node of
      * this, its end node equals to the end node of this, and its label equals to the label of this
      */
     @Override
@@ -159,6 +162,12 @@ public class Edge<E1, E2> {
         return this.label.hashCode() * 31 * 31 + this.start.hashCode() * 31 + this.end.hashCode();
     }
 
+    /**
+     * A String representation of this, useful for testing.
+     *
+     * @return a String representation of this
+     */
+    @Override
     public String toString() {
         return " Edge: from (" + start + ") to (" + end + ") with length " + label;
     }

@@ -1,3 +1,11 @@
 Briefly list any changes you made to your graph class during hw-pathfinder,
 and why you made those changes.
 
+Removed many unnecessary methods. They over rely on Strings as the "index" for locating a Node
+or Edge, and this is not well supported after introducing generics.
+
+Added containsNode in Graph class. This method helps check if a node is in the current graph.
+
+Added getChildrenFromNodeReturnValueSet in Graph class. This method directly retuns a set of edges
+that have their start node as the given node. Very useful in my Dijkstra method when it needs to explore
+all following edges from a node.

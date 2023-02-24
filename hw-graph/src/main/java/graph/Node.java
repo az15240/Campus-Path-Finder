@@ -1,24 +1,28 @@
 package graph;
 
 /**
- * <b>Node</b> represents a <b>mutable</b> node in a graph. It includes a name and a
- * optional value for the node. Two <b>Node</b>s are equal if they have the same name.
+ * <b>Node</b> represents a <b>mutable</b> node in a graph. It includes a value of generic type.
+ * Two <b>Node</b>s are equal if they have the same values.
+ * @param <E> the generic type
  */
 public class Node<E> {
 
     // Abstraction Function:
     // Node n, represents a node in a graph.
-    // In a Node, name represents the name of the node,
-    // and value represents the value of the node.
+    // In a Node, value represents the value of the node.
     //
     // Representation Invariant:
     // this != null
 
     /**
-     * Value of the node, in integer
+     * Value of the node, in generic type.
      */
     private E value;
 
+    /**
+     * Constructs a Node object with given generic type value v.
+     * @param v given generic type value v
+     */
     public Node(E v) {
         value = v;
     }
@@ -50,11 +54,11 @@ public class Node<E> {
 
     /**
      * Indicates whether the given Object is equal to this.
-     * The given Object is equal to this if it is an instance of Node, and its name equals
-     * to the name of this.
+     * The given Object is equal to this if it is an instance of Node generics, and its value equals
+     * to the value of this.
      *
      * @param other the given Object
-     * @return true if Object is an instance of Node, and its name equals to the name of this
+     * @return true if Object is an instance of Node generics, and its value equals to the value of this
      */
     @Override
     public boolean equals(Object other) {
@@ -67,7 +71,7 @@ public class Node<E> {
 
     /**
      * Returns a hash code of the object.
-     * In particular, the hashCode of this is defined as this.name's hash code.
+     * In particular, the hashCode of this is defined as this.value's hash code.
      *
      * @return the hash code of the object
      */
@@ -76,6 +80,12 @@ public class Node<E> {
         return this.value.hashCode();
     }
 
+    /**
+     * A String representation of this, useful for testing.
+     *
+     * @return a String representation of this
+     */
+    @Override
     public String toString() {
         return " Node value: " + value + " ";
     }

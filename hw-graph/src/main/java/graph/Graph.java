@@ -6,7 +6,11 @@ import java.util.*;
  * <b>Graph</b> represents a <b>mutable</b> graph. It consists of a set of <b>Node</b>s and
  * a set of <b>Edge</b>s connecting the nodes. It also supports various methods in manipulating
  * the graph. Note that this graph can contain multiple edges with the same start and end nodes.
- * All Nodes must have different names.
+ * All Nodes must have different names. It uses generics on type of Nodes and Edges. Note that
+ * the type of Nodes are Comparable.
+ *
+ * @param <E1> Generic type for Nodes.
+ * @param <E2> Generic type for Edges.
  */
 public class Graph<E1 extends Comparable<E1>, E2> {
 
@@ -19,8 +23,8 @@ public class Graph<E1 extends Comparable<E1>, E2> {
     // this != null && nodes != null && edges != null
     // && the start and end Node of each Edge in edges are in nodes
     // or in pseudocode: nodes.contains(e.start) && nodes.contains(e.end) for all Edge e in edges
-    // && all Nodes must have different names
-    // or in pseudocode: n1.name.equals(n2.name) is false for all different Nodes n1, n2 in nodes
+    // && all Nodes must have different values
+    // or in pseudocode: n1.value.equals(n2.value) is false for all different Nodes n1, n2 in nodes
 
     /**
      * Debug variable: set to false on submission
@@ -128,15 +132,13 @@ public class Graph<E1 extends Comparable<E1>, E2> {
         return edges;
     }
 
-    public Node<E1> getNodeByGenerics(E1 e) {
-        for (Node<E1> n : nodes) {
-            if (n.getValue().equals(e)) {
-                return n;
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Checks if a given node is in this.
+     *
+     * @spec.requires node != null
+     * @param node the given node
+     * @return true if node is in this, false otherwise.
+     */
     public boolean containsNode(Node<E1> node) {
         return nodes.contains(node);
     }
@@ -173,36 +175,38 @@ public class Graph<E1 extends Comparable<E1>, E2> {
         return children;
     }
 
-    public Map<E1, List<E2>> getChildrenFromNodeReturnValue(Node<E1> node) {
-        Map<E1, List<E2>> children = new HashMap<>();
+    /**
+     * Returns a set of Edges representing and all edges starting from the given node.
+     *
+     * @spec.requires node != null
+     * @param node the given node
+     * @return a set of Edges representing and all edges starting from the given node.
+     */
+    public Set<Edge<E1, E2>> getChildrenFromNodeReturnValueSet(Node<E1> node) {
         if (edges.get(node) == null) {
-            return children;
-        }
-        for (Edge<E1, E2> e : edges.get(node)) {
-            E1 childValue = e.getEnd().getValue();
-            E2 label = e.getLabel();
-            if (!children.containsKey(childValue)) {
-                List<E2> theEdges = new ArrayList<>();
-                theEdges.add(label);
-                children.put(childValue, theEdges);
-            } else {
-                List<E2> theEdges = children.get(childValue);
-                theEdges.add(label);
-            }
-        }
-        return children;
-    }
-
-    public Set<Edge<E1, E2>> getChildrenFromNodeReturnValueSet(Node<E1> node) { // TBD here
-        System.out.println("The given node is: " + node);
-        if (nodes.contains(node)) {
-            System.out.println("The node is found. ");
-        }
-        if (edges.get(node) == null) {
-            System.out.println("The node is not found. ");
             return new HashSet<>();
         }
         return edges.get(node);
+    }
+
+    /**
+     * A String representation of this, useful for testing.
+     *
+     * @return a String representation of this
+     */
+    public String toString() {
+        String text = "    Graph contains:\n";
+        for (Node<E1> nd : nodes) {
+            text += "   " + nd.toString() + "\n";
+        }
+        for (Node<E1> nd : edges.keySet()) {
+            Set<Edge<E1, E2>> eds = edges.get(nd);
+            for (Edge<E1, E2> ed : eds) {
+                text += "   " + ed.toString() + "\n";
+            }
+        }
+        text += "\n";
+        return text;
     }
 
     // Private helper method, to help testing and debugging
@@ -218,20 +222,5 @@ public class Graph<E1 extends Comparable<E1>, E2> {
                 System.out.println(" " + e.getEnd().getValue() + " via " + e.getLabel());
             }
         }
-    }
-
-    public String toString() {
-        String text = "    Graph contains:\n";
-        for (Node<E1> nd : nodes) {
-            text += "   " + nd.toString() + "\n";
-        }
-        for (Node<E1> nd : edges.keySet()) {
-            Set<Edge<E1, E2>> eds = edges.get(nd);
-            for (Edge<E1, E2> ed : eds) {
-                text += "   " + ed.toString() + "\n";
-            }
-        }
-        text += "\n";
-        return text;
     }
 }

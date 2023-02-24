@@ -19,6 +19,8 @@ import java.util.List;
  * This represents an immutable path between two cartesian coordinate points, particularly
  * Path#getStart() and Path#getEnd(). Also contains a cached
  * version of the total cost along this path, for efficient repeated access.
+ *
+ * Paths are comparable according to their costs, in numerical order.
  */
 public class Path<E1> implements Iterable<Path<E1>.Segment>, Comparable<Path<E1>> {
 
@@ -211,7 +213,7 @@ public class Path<E1> implements Iterable<Path<E1>.Segment>, Comparable<Path<E1>
 
     @Override
     public int compareTo(Path<E1> o) {
-        return -Double.compare(o.cost, this.cost);
+        return Double.compare(this.cost, o.cost);
     }
 
     /**
