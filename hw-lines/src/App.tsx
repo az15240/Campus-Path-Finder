@@ -15,15 +15,18 @@ import Map from "./Map";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
+import {ColoredEdge} from "./types";
 
-interface AppState {}
+interface AppState {
+    lines: ColoredEdge[];
+}
 
 class App extends Component<{}, AppState> { // <- {} means no props.
 
   constructor(props: any) {
     super(props);
     this.state = {
-      // TODO: store edges in this state
+       lines: []
     };
   }
 
@@ -32,14 +35,25 @@ class App extends Component<{}, AppState> { // <- {} means no props.
       <div>
         <h1 id="app-title">Line Mapper!</h1>
         <div>
-          {/* TODO: define props in the Map component and pass them in here */}
-          <Map />
+          <Map
+            edgeList={this.state.lines}
+            // onChange={() => {this.setState({lines: [],})}}
+          />
         </div>
         <EdgeList
           onChange={(value) => {
-            // TODO: Modify this onChange callback to store the edges in the state
-            console.log("EdgeList onChange", value);
-          }}
+            // this.state.lines.push(value);
+            // let temp = this.state.lines;
+            // temp.push(value);
+            // this.setState({
+            //     lines: temp,
+            // });
+              this.setState({
+                  lines: value,
+              });
+              console.log("EdgeList onChange", value)
+              }
+          }
         />
       </div>
     );
