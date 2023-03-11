@@ -9,12 +9,13 @@
  * author.
  */
 
-import { LatLngExpression } from "leaflet";
-import React, { Component } from "react";
-import { MapContainer, TileLayer } from "react-leaflet";
+import {LatLngExpression} from "leaflet";
+import React, {Component} from "react";
+import {MapContainer, TileLayer} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import MapLine from "./MapLine";
-import { UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER } from "./Constants";
+import {UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER} from "./Constants";
+import {ColoredEdge} from "./types";
 
 // This defines the location of the map. These are the coordinates of the UW Seattle campus
 const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
@@ -24,34 +25,46 @@ const position: LatLngExpression = [UW_LATITUDE_CENTER, UW_LONGITUDE_CENTER];
 // with your hw-lines Map
 
 interface MapProps {
-  // TODO: Define the props of this component.
+    edgeList: ColoredEdge[];
 }
 
-interface MapState {}
+interface MapState {
+}
 
 class Map extends Component<MapProps, MapState> {
-  render() {
-    return (
-      <div id="map">
-        <MapContainer
-          center={position}
-          zoom={15}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          {
-            // TODO: Render map lines here using the MapLine component. E.g.
-            // <MapLine key="key1" color="red" x1={1000} y1={1000} x2={2000} y2={2000}/>
-            // will draw a red line from the point 1000,1000 to 2000,2000 on the
-            // map. Note that key should be a unique key that only this MapLine has.
-          }
-        </MapContainer>
-      </div>
-    );
-  }
+    render() {
+        // first store all edges in this list in the MapLine format, so we return all edges only once.
+        let edges: any[] = [];
+        for (let i = 0; i < this.props.edgeList.length; i++) {
+            let currentEdge: ColoredEdge = this.props.edgeList[i];
+            edges.push(
+                <MapLine key={currentEdge.key}
+                         color={currentEdge.color}
+                         x1={currentEdge.x1}
+                         y1={currentEdge.y1}
+                         x2={currentEdge.x2}
+                         y2={currentEdge.y2}
+                />
+            )
+            ;
+        }
+
+        return (
+            <div id="map">
+                <MapContainer
+                    center={position}
+                    zoom={15}
+                    scrollWheelZoom={false}
+                >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    {<div>{edges}</div>}
+                </MapContainer>
+            </div>
+        );
+    }
 }
 
 export default Map;

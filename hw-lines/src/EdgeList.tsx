@@ -93,6 +93,7 @@ class EdgeList extends Component<EdgeListProps, EdgeListState> {
         this.setState({
             textValue: "",
         });
+        this.props.onChange([]);
     }
 
     render() {

@@ -10,15 +10,43 @@
  */
 
 import React, {Component} from 'react';
+import EdgeList from "./EdgeList";
+import Map from "./Map";
 
 // Allows us to write CSS styles inside App.css, any styles will apply to all components inside <App />
 import "./App.css";
+import {ColoredEdge} from "./types";
 
-class App extends Component<{}, {}> {
+interface AppState {
+    lines: ColoredEdge[];
+    // making lines as the AppState could help pass the lines, or all Edges here, as props or states between Map and EdgeList.
+}
+
+class App extends Component<{}, AppState> { // <- {} means no props.
+
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            lines: []
+        };
+    }
 
     render() {
         return (
-            <p>Here's the beginning of your AMAZING CampusPaths GUI!</p>
+            <div>
+                <h1 id="app-title">Campus Paths!</h1>
+                <div>
+                    <Map
+                        edgeList={this.state.lines}
+                    />
+                </div>
+                <EdgeList
+                    onChange={(value) => {
+                        this.setState({
+                            lines: value,
+                        });}}
+                />
+            </div>
         );
     }
 

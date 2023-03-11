@@ -42,12 +42,6 @@ class App extends Component<{}, AppState> { // <- {} means no props.
         </div>
         <EdgeList
           onChange={(value) => {
-            // this.state.lines.push(value);
-            // let temp = this.state.lines;
-            // temp.push(value);
-            // this.setState({
-            //     lines: temp,
-            // });
               this.setState({
                   lines: value,
               });
